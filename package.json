@@ -6,6 +6,7 @@
     "@aurahelper/connector": "^2.1.2",
     "@aurahelper/core": "G:\\Workspace\\NodeJS\\Aura Helper Framework\\ah-core",
     "@aurahelper/git-manager": "^2.1.3",
+    "@aurahelper/xml-compressor": "^2.0.1",
     "@oclif/core": "^2.11.8",
     "@salesforce/core": "^5.2.10",
     "@salesforce/kit": "^3.0.8",
@@ -117,6 +118,19 @@
             "subtopics": {
               "tests": {
                 "description": "Extract Tests execution information from git commits"
+              }
+            }
+          },
+          "metadata": {
+            "description": "Topic to work with Salesforce Metadata",
+            "subtopics": {
+              "local": {
+                "description": "Topic to work with local metadata",
+                "subtopics": {
+                  "special": {
+                    "description": "Topic to work with special metadata types"
+                  }
+                }
               }
             }
           }

@@ -46,6 +46,14 @@ Output file
 
 Path to file for redirect the output
 
+# flags.sort-order.summary
+
+Sort order for XML Files compression
+
+# flags.sort-order.description
+
+Sort order for the XML elements when compress XML files. By default, the elements are sorted with simple XML elements first.
+
 # error.root
 
 Wrong --root path (%s). Error: %s

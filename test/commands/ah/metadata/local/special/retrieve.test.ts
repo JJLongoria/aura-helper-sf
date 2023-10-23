@@ -1,9 +1,9 @@
 import { TestContext } from '@salesforce/core/lib/testSetup';
 // import { expect } from 'chai';
 // import { stubSfCommandUx } from '@salesforce/sf-plugins-core';
-// import AhDataImport from '..\\..\\..\\..\\src\\commands\\ah\\data\\import';
+// import AhMetadataLocalSpecialRetrieve from '..\\..\\..\\..\\..\\..\\src\\commands\\ah\\metadata\\local\\special\\retrieve';
 
-describe('ah data import', () => {
+describe('ah metadata local special retrieve', () => {
   const $$ = new TestContext();
   // let sfCommandStubs: ReturnType<typeof stubSfCommandUx>;
 
@@ -16,7 +16,7 @@ describe('ah data import', () => {
   });
 
   it('runs hello', async () => {
-    // await AhDataImport.run([]);
+    // await AhMetadataLocalSpecialRetrieve.run([]);
     // const output = sfCommandStubs.log
     //   .getCalls()
     //   .flatMap((c) => c.args)
@@ -25,12 +25,14 @@ describe('ah data import', () => {
   });
 
   it('runs hello with --json and no provided name', async () => {
-    //   const result = await AhDataImport.run([]);
-    //   expect(result.path).to.equal('G:\\Workspace\\SFDX\\sf-aura-helper\\src\\commands\\ah\\data\\import.ts');
+    // const result = await AhMetadataLocalSpecialRetrieve.run([]);
+    // expect(result.path).to.equal(
+    //   'G:\\Workspace\\SFDX\\sf-aura-helper\\src\\commands\\ah\\metadata\\local\\special\\retrieve.ts'
+    // );
   });
 
   it('runs hello world --name Astro', async () => {
-    // await AhDataImport.run(['--name', 'Astro']);
+    // await AhMetadataLocalSpecialRetrieve.run(['--name', 'Astro']);
     // const output = sfCommandStubs.log
     //   .getCalls()
     //   .flatMap((c) => c.args)
