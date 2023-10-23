@@ -160,7 +160,7 @@ export default class AhDataImport extends SfCommand<AhDataImportResult> {
         if (flags.progress) {
           this.log(messages.getMessage('message.import-success'));
         } else {
-          this.spinner.status = messages.getMessage('message.import-success');
+          this.spinner.stop(messages.getMessage('message.import-success'));
         }
         return {
           success: true,

@@ -88,7 +88,7 @@ export default class AhDataExport extends SfCommand<ExportTreeDataResult[]> {
       if (flags.progress) {
         this.log(messages.getMessage('message.extracted-data-success', [flags['output-path']]));
       } else {
-        this.spinner.status = messages.getMessage('message.extracted-data-success', [flags['output-path']]);
+        this.spinner.stop(messages.getMessage('message.extracted-data-success', [flags['output-path']]));
       }
       return response;
     } catch (error) {

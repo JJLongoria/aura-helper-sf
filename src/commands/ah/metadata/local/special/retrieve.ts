@@ -13,10 +13,6 @@ const generalMessages = Messages.loadMessages('aura-helper-sf', 'general');
 
 const sortOrderValues: string[] = Object.values(XMLCompressor.getSortOrderValues()) as string[];
 
-export type AhMetadataLocalSpecialRetrieveResult = {
-  path: string;
-};
-
 export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
@@ -86,7 +82,7 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
     if (flags.progress) {
       this.log(messages.getMessage('message.running-retrieve'));
     } else {
-      this.spinner.status = messages.getMessage('message.running-retrieve');
+      this.spinner.start(messages.getMessage('message.running-retrieve'));
     }
     try {
       let types: { [key: string]: MetadataType } | undefined;
@@ -168,7 +164,7 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
       if (flags.progress) {
         this.log(messages.getMessage('message.retrieve-finished'));
       } else {
-        this.spinner.status = messages.getMessage('message.retrieve-finished');
+        this.spinner.stop(messages.getMessage('message.retrieve-finished'));
       }
       return retrieveOut;
     } catch (error) {
