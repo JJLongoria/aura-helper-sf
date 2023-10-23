@@ -1,6 +1,8 @@
-# sf-aura-helper
+# Aura Helper SF
 
-[![NPM](https://img.shields.io/npm/v/sf-aura-helper.svg?label=sf-aura-helper)](https://www.npmjs.com/package/sf-aura-helper) [![Downloads/week](https://img.shields.io/npm/dw/sf-aura-helper.svg)](https://npmjs.org/package/sf-aura-helper) [![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)](https://raw.githubusercontent.com/salesforcecli/sf-aura-helper/main/LICENSE.txt)
+[![NPM](https://img.shields.io/npm/v/aura-helper-sf.svg?label=aura-helper-sf)](https://www.npmjs.com/package/aura-helper-sf)
+[![Downloads/week](https://img.shields.io/npm/dw/aura-helper-sf.svg)](https://npmjs.org/package/aura-helper-sf)
+[![License](https://img.shields.io/github/license/jjlongoria/aura-helper-sf?logo=github)](https://github.com/JJLongoria/aura-helper-sf/blob/master/LICENSE)
 
 ## Using the template
 

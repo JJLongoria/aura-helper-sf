@@ -3,6 +3,8 @@
   "description": "Plugin for SF CLI to addapt sfdx-aura-helper plugin to the new SF CLI Tool. This CLI contains to many util commands for every Salesforce Project. List and Describe metadata types, create package files from many sources (including git), maintenance your local project integrity and much more. Has to many tools to support CLI workflows and many other things",
   "version": "0.0.1",
   "dependencies": {
+    "@aurahelper/connector": "^2.1.2",
+    "@aurahelper/core": "G:\\Workspace\\NodeJS\\Aura Helper Framework\\ah-core",
     "@oclif/core": "^2.11.8",
     "@salesforce/core": "^5.2.10",
     "@salesforce/kit": "^3.0.8",
@@ -102,7 +104,16 @@
     "devPlugins": [
       "@oclif/plugin-help"
     ],
-    "topics": {}
+    "topics": {
+      "ah": {
+        "description": "Aura Helper Commands",
+        "subtopics": {
+          "data": {
+            "description": "Topic to work with Salesforce Org Data"
+          }
+        }
+      }
+    }
   },
   "scripts": {
     "build": "wireit",
