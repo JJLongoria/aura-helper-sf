@@ -1,9 +1,9 @@
 import { TestContext } from '@salesforce/core/lib/testSetup';
 // import { expect } from 'chai';
 // import { stubSfCommandUx } from '@salesforce/sf-plugins-core';
-// import AhDataExport from '..\\..\\..\\..\\src\\commands\\ah\\data\\export';
+// import AhGitTestsExtract from '..\\..\\..\\..\\..\\src\\commands\\ah\\git\\tests\\extract';
 
-describe('ah data export', () => {
+describe('ah git tests extract', () => {
   const $$ = new TestContext();
   // let sfCommandStubs: ReturnType<typeof stubSfCommandUx>;
 
@@ -15,13 +15,22 @@ describe('ah data export', () => {
     $$.restore();
   });
 
+  it('runs hello', async () => {
+    /* await AhGitTestsExtract.run([]);
+    const output = sfCommandStubs.log
+      .getCalls()
+      .flatMap((c) => c.args)
+      .join('\n');
+    expect(output).to.include('hello world');*/
+  });
+
   it('runs hello with --json and no provided name', async () => {
-    /* const result = await AhDataExport.run([]);
-    expect(result).to.equal('G:\\Workspace\\SFDX\\sf-aura-helper\\src\\commands\\ah\\data\\export.ts');*/
+    /* const result = await AhGitTestsExtract.run([]);
+    expect(result.path).to.equal('G:\\Workspace\\SFDX\\sf-aura-helper\\src\\commands\\ah\\git\\tests\\extract.ts');*/
   });
 
   it('runs hello world --name Astro', async () => {
-    /* await AhDataExport.run(['--name', 'Astro']);
+    /* await AhGitTestsExtract.run(['--name', 'Astro']);
     const output = sfCommandStubs.log
       .getCalls()
       .flatMap((c) => c.args)

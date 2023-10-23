@@ -5,6 +5,7 @@
   "dependencies": {
     "@aurahelper/connector": "^2.1.2",
     "@aurahelper/core": "G:\\Workspace\\NodeJS\\Aura Helper Framework\\ah-core",
+    "@aurahelper/git-manager": "^2.1.3",
     "@oclif/core": "^2.11.8",
     "@salesforce/core": "^5.2.10",
     "@salesforce/kit": "^3.0.8",
@@ -110,6 +111,14 @@
         "subtopics": {
           "data": {
             "description": "Topic to work with Salesforce Org Data"
+          },
+          "git": {
+            "description": "Topic to work directly with git to extract information from git commits",
+            "subtopics": {
+              "tests": {
+                "description": "Extract Tests execution information from git commits"
+              }
+            }
           }
         }
       }

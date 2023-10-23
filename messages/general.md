@@ -30,6 +30,22 @@ Login username or alias for the target org
 
 Overrides your default org
 
+# flags.output-file.summary
+
+Output file
+
+# flags.output-file.description
+
+Path to file for redirect the output
+
+# flags.output-path.summary
+
+Output file
+
+# flags.output-path.description
+
+Path to file for redirect the output
+
 # error.root
 
 Wrong --root path (%s). Error: %s
