@@ -225,4 +225,13 @@ export default class CommandUtils {
       throw generalMessages.createError('error.wrong-directory', [flagName, err.message]);
     }
   }
+
+  public static validateFilePath(file: string, flagName: string): string {
+    try {
+      return Validator.validateFilePath(file);
+    } catch (error) {
+      const err = error as Error;
+      throw generalMessages.createError('error.wrong-file', [flagName, err.message]);
+    }
+  }
 }

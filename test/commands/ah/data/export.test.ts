@@ -1,14 +1,14 @@
 import { TestContext } from '@salesforce/core/lib/testSetup';
-import { expect } from 'chai';
+// import { expect } from 'chai';
 import { stubSfCommandUx } from '@salesforce/sf-plugins-core';
-import AhDataExport from '..\\..\\..\\..\\src\\commands\\ah\\data\\export';
+// import AhDataExport from '..\\..\\..\\..\\src\\commands\\ah\\data\\export';
 
 describe('ah data export', () => {
   const $$ = new TestContext();
-  let sfCommandStubs: ReturnType<typeof stubSfCommandUx>;
+  // let sfCommandStubs: ReturnType<typeof stubSfCommandUx>;
 
   beforeEach(() => {
-    sfCommandStubs = stubSfCommandUx($$.SANDBOX);
+    // sfCommandStubs = stubSfCommandUx($$.SANDBOX);
   });
 
   afterEach(() => {

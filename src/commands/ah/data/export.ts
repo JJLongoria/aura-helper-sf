@@ -1,5 +1,5 @@
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
-import { Messages } from '@salesforce/core';
+import { Messages, SfError } from '@salesforce/core';
 import { ExportTreeDataResult } from '@aurahelper/core';
 import { ProjectUtils } from '@aurahelper/core/dist/utils';
 import { SFConnector } from '@aurahelper/connector';
@@ -23,6 +23,22 @@ export default class AhDataExport extends SfCommand<ExportTreeDataResult[]> {
       required: false,
       helpValue: '<path/to/project/root>',
     }),
+    'api-version': Flags.orgApiVersion({
+      char: 'a',
+      summary: generalMessages.getMessage('flags.api-version.summary'),
+      description: generalMessages.getMessage('flags.api-version.description'),
+    }),
+    'target-org': Flags.optionalOrg({
+      char: 'o',
+      description: generalMessages.getMessage('flags.target-org.description'),
+      summary: generalMessages.getMessage('flags.target-org.summary'),
+      required: false,
+    }),
+    progress: Flags.boolean({
+      char: 'p',
+      summary: generalMessages.getMessage('flags.progress.summary'),
+      description: generalMessages.getMessage('flags.progress.description'),
+    }),
     query: Flags.string({
       char: 'q',
       summary: messages.getMessage('flags.query.summary'),
@@ -41,27 +57,13 @@ export default class AhDataExport extends SfCommand<ExportTreeDataResult[]> {
       description: messages.getMessage('flags.prefix.description'),
       helpValue: '<filePrefix>',
     }),
-    progress: Flags.boolean({
-      char: 'p',
-      summary: generalMessages.getMessage('flags.progress.summary'),
-      description: generalMessages.getMessage('flags.progress.description'),
-    }),
-    'api-version': Flags.orgApiVersion({
-      char: 'a',
-      summary: generalMessages.getMessage('flags.api-version.summary'),
-      description: generalMessages.getMessage('flags.api-version.description'),
-    }),
-    'target-org': Flags.optionalOrg({
-      char: 'o',
-      description: generalMessages.getMessage('flags.target-org.description'),
-      summary: generalMessages.getMessage('flags.target-org.summary'),
-      required: false,
-    }),
   };
 
   public async run(): Promise<ExportTreeDataResult[]> {
     const { flags } = await this.parse(AhDataExport);
-    flags.root = CommandUtils.validateProjectPath(flags.root);
+    if (!flags['target-org']) {
+      flags.root = CommandUtils.validateProjectPath(flags.root);
+    }
     flags['output-path'] = CommandUtils.validateFolderPath(flags['output-path'], 'output-path');
     try {
       if (!flags.progress) {
@@ -91,7 +93,7 @@ export default class AhDataExport extends SfCommand<ExportTreeDataResult[]> {
       return response;
     } catch (error) {
       const err = error as Error;
-      throw messages.createError(err.message);
+      throw new SfError(err.message);
     }
   }
 }

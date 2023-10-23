@@ -38,6 +38,10 @@ Wrong --root path (%s). Error: %s
 
 This command is required to run from within an SFDX project
 
+# error.wrong-file
+
+Wrong %s file path. Select a valid path. Error: %s
+
 # error.wrong-directory
 
-Wrong %s path. Select a valid path. Error: %s
+Wrong %s directory path. Select a valid path. Error: %s
