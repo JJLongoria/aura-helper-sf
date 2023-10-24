@@ -33,6 +33,8 @@ export default class AhDataImport extends SfCommand<AhDataImportResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
+  // eslint-disable-next-line sf-plugin/no-unnecessary-aliases
+  public static readonly aliases = ['ah:import:data'];
 
   public static readonly flags = {
     root: Flags.directory({

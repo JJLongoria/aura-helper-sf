@@ -17,6 +17,13 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
+  // eslint-disable-next-line sf-plugin/no-unnecessary-aliases
+  public static readonly aliases = [
+    'ah:retrieve:special:local:metadata',
+    'ah:retrieve:local:special:metadata',
+    'ah:local:retrieve:special:metadata',
+    'ah:retrieve:special:metadata:local',
+  ];
 
   public static readonly flags = {
     root: Flags.directory({

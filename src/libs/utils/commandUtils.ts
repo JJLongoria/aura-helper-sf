@@ -4,6 +4,13 @@ import { AnyJson } from '@salesforce/ts-types';
 const Validator = CoreUtils.Validator;
 const Utils = CoreUtils.Utils;
 
+export interface MetadataDescribeTableFields {
+  type: string;
+  object?: string;
+  item?: string;
+  path?: string;
+}
+
 Messages.importMessagesDirectory(__dirname);
 const generalMessages = Messages.loadMessages('aura-helper-sf', 'general');
 
@@ -95,8 +102,10 @@ export default class CommandUtils {
     return types;
   }
 
-  public static transformMetadataTypesToTable(metadata: { [key: string]: MetadataType }): AnyJson[] {
-    const result: AnyJson[] = [];
+  public static transformMetadataTypesToTable(metadata: {
+    [key: string]: MetadataType;
+  }): MetadataDescribeTableFields[] {
+    const result: MetadataDescribeTableFields[] = [];
     for (const metadataTypeName of Object.keys(metadata)) {
       const metadataType = metadata[metadataTypeName];
       if (metadataType.hasChilds()) {

@@ -25,6 +25,13 @@ export default class AhMetadataLocalCompress extends SfCommand<AhMetadataLocalCo
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
+  // eslint-disable-next-line sf-plugin/no-unnecessary-aliases
+  public static readonly aliases = [
+    'ah:compress:local:metadata',
+    'ah:compress:metadata:local',
+    'ah:metadata:compress:local',
+    'ah:local:metadata:compress',
+  ];
 
   public static readonly flags = {
     root: Flags.directory({

@@ -1,7 +1,7 @@
 // import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 // import { expect } from 'chai';
 
-describe('ah data import NUTs', () => {
+describe('ah metadata local describe NUTs', () => {
   // let session: TestSession;
 
   before(async () => {
@@ -14,7 +14,7 @@ describe('ah data import NUTs', () => {
 
   it('should display provided name', () => {
     // const name = 'World';
-    // const command = `ah data import --name ${name}`;
+    // const command = `ah metadata local describe --name ${name}`;
     // const output = execCmd(command, { ensureExitCode: 0 }).shellOutput.stdout;
     // expect(output).to.contain(name);
   });

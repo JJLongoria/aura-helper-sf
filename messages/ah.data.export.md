@@ -6,14 +6,6 @@ Export Salesforce Data.
 
 Command to export data from the selected org to work with data:import command.
 
-# flags.name.summary
-
-Description of a flag.
-
-# flags.name.description
-
-More information about a flag. Don't repeat the summary.
-
 # flags.query.summary
 
 Query to Extract Data
@@ -54,8 +46,8 @@ Data extracted succesfully on %s
 
 - Extract Accounts data with related contacts
 
-  <%= config.bin %> <%= command.id %> -q \"Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account\" -o \"./export/accounts\"
+  <%= config.bin %> <%= command.id %> -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account" -o "./export/accounts"
 
 - Extract Accounts data with Records Types
 
-  <%= config.bin %> <%= command.id %> -q \"Select Id, Name, BillingNumber, RecordType.DeveloperName from Account\" -o \"./export/accounts\"
+  <%= config.bin %> <%= command.id %> -q "Select Id, Name, BillingNumber, RecordType.DeveloperName from Account" -o "./export/accounts"

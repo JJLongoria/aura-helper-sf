@@ -15,6 +15,8 @@ export default class AhGitTestsExtract extends SfCommand<string | string[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
+  // eslint-disable-next-line sf-plugin/no-unnecessary-aliases
+  public static readonly aliases = ['ah:extract:git:test', 'ah:git:extract:test'];
 
   public static readonly flags = {
     root: Flags.directory({

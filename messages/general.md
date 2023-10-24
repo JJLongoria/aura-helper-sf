@@ -54,6 +54,14 @@ Sort order for XML Files compression
 
 Sort order for the XML elements when compress XML files. By default, the elements are sorted with simple XML elements first.
 
+# message.getting-available-types
+
+Getting All Available Metadata Types
+
+# message.output-saved
+
+Output saved in: %s
+
 # error.root
 
 Wrong --root path (%s). Error: %s
