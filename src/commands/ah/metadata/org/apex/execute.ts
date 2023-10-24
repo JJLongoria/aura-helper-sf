@@ -68,6 +68,7 @@ export default class AhMetadataOrgApexExecute extends SfCommand<AhMetadataOrgApe
       summary: messages.getMessage('flags.file.summary'),
       description: messages.getMessage('flags.file.description'),
       helpValue: '<path/to/apex/file>',
+      required: true,
     }),
     iterations: Flags.integer({
       char: 'i',
