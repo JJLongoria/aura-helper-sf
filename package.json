@@ -6,6 +6,7 @@
     "@aurahelper/connector": "^2.1.2",
     "@aurahelper/core": "G:\\Workspace\\NodeJS\\Aura Helper Framework\\ah-core",
     "@aurahelper/git-manager": "^2.1.3",
+    "@aurahelper/ignore": "^2.0.0",
     "@aurahelper/metadata-factory": "^2.1.5",
     "@aurahelper/xml-compressor": "^2.0.1",
     "@oclif/core": "^2.11.8",

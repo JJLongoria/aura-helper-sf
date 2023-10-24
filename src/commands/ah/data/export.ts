@@ -1,3 +1,4 @@
+/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { ExportTreeDataResult } from '@aurahelper/core';
@@ -13,7 +14,6 @@ export default class AhDataExport extends SfCommand<ExportTreeDataResult[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  // eslint-disable-next-line sf-plugin/no-unnecessary-aliases
   public static readonly aliases = ['ah:export:data'];
 
   public static readonly flags = {

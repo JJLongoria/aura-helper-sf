@@ -1,3 +1,4 @@
+/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { MetadataType, PathUtils, ProgressStatus, RetrieveResult, SpecialMetadata } from '@aurahelper/core';
@@ -17,7 +18,6 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  // eslint-disable-next-line sf-plugin/no-unnecessary-aliases
   public static readonly aliases = [
     'ah:retrieve:special:local:metadata',
     'ah:retrieve:local:special:metadata',
@@ -53,6 +53,7 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
       summary: messages.getMessage('flags.type.summary'),
       description: messages.getMessage('flags.type.description'),
       char: 't',
+      exclusive: ['all'],
     }),
     'include-org': Flags.string({
       summary: messages.getMessage('flags.include-org.summary'),

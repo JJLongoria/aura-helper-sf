@@ -50,7 +50,7 @@
 
 "@aurahelper/ignore@^2.0.0":
   version "2.0.0"
-  resolved "https://registry.npmjs.org/@aurahelper/ignore/-/ignore-2.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/@aurahelper/ignore/-/ignore-2.0.0.tgz#6d7c59ac0a968410cf5419fe1a8127126ab68bc5"
   integrity sha512-KyFza6Iyr9sXjb5rTV4VrrJ9A2k7j3nQQKAF8YlSOGPDzrFPQ2hb9IfCEWLcVQOGPmYpr4xKHmqAa6Dw1DamJw==
   dependencies:
     "@aurahelper/core" "^2.0.0"

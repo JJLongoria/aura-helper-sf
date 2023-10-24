@@ -243,4 +243,13 @@ export default class CommandUtils {
       throw generalMessages.createError('error.wrong-file', [flagName, err.message]);
     }
   }
+
+  public static validateJSONFile(file: string, flagName: string): string {
+    try {
+      Validator.validateJSONFile(file);
+    } catch (error) {
+      const err = error as Error;
+      throw generalMessages.createError('error.wrong-file', [flagName, err.message]);
+    }
+  }
 }
