@@ -90,6 +90,8 @@ export default class AhMetadataLocalIgnore extends SfCommand<AhMetadataLocalIgno
     const types = flags.type ? CommandUtils.getTypes(flags.type) : undefined;
     if (!flags.progress) {
       this.spinner.start(messages.getMessage('message.running-ignore'));
+    } else {
+      this.log(messages.getMessage('message.running-ignore'));
     }
     const alias = ProjectUtils.getOrgAlias(flags.root);
     const namespace = ProjectUtils.getOrgNamespace(flags.root);
