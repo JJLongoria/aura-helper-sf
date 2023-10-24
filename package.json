@@ -135,6 +135,14 @@
                     "description": "Topic to work with special metadata types"
                   }
                 }
+              },
+              "org": {
+                "description": "Topic to work with Salesforce Org Metadata",
+                "subtopics": {
+                  "apex": {
+                    "description": "Topic to work with Apex"
+                  }
+                }
               }
             }
           }

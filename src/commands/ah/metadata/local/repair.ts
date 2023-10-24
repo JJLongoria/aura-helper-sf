@@ -1,3 +1,4 @@
+/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
@@ -34,6 +35,13 @@ export default class AhMetadataLocalRepair extends SfCommand<AnyJson> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
+  public static readonly aliases = [
+    'ah:repair:local:metadata',
+    'ah:repair:metadata:local',
+    'ah:local:metadata:repair',
+    'ah:local:repair:metadata',
+    'ah:metadata:repair:local',
+  ];
 
   public static readonly flags = {
     root: Flags.directory({

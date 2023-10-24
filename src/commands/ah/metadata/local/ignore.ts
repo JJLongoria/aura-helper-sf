@@ -30,6 +30,7 @@ export default class AhMetadataLocalIgnore extends SfCommand<AhMetadataLocalIgno
     'ah:ignore:metadata:local',
     'ah:metadata:ignore:local',
     'ah:local:metadata:ignore',
+    'ah:local:ignore:metadata',
   ];
 
   public static readonly flags = {

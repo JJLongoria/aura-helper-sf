@@ -31,6 +31,7 @@ export default class AhMetadataLocalCompress extends SfCommand<AhMetadataLocalCo
     'ah:compress:metadata:local',
     'ah:metadata:compress:local',
     'ah:local:metadata:compress',
+    'ah:local:compress:metadata',
   ];
 
   public static readonly flags = {

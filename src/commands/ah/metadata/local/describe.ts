@@ -23,6 +23,7 @@ export default class AhMetadataLocalDescribe extends SfCommand<{ [key: string]: 
     'ah:describe:metadata:local',
     'ah:metadata:describe:local',
     'ah:local:metadata:describe',
+    'ah:local:describe:metadata',
   ];
 
   public static readonly flags = {
