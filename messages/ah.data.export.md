@@ -46,8 +46,8 @@ Data extracted succesfully on %s
 
 - Extract Accounts data with related contacts
 
-  <%= config.bin %> <%= command.id %> -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account" -o "./export/accounts"
+  <%= config.bin %> <%= command.id %> -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account" --output-file "./export/accounts"
 
 - Extract Accounts data with Records Types
 
-  <%= config.bin %> <%= command.id %> -q "Select Id, Name, BillingNumber, RecordType.DeveloperName from Account" -o "./export/accounts"
+  <%= config.bin %> <%= command.id %> -q "Select Id, Name, BillingNumber, RecordType.DeveloperName from Account" -output-file "./export/accounts"

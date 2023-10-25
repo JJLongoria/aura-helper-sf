@@ -56,6 +56,12 @@ export default class AhMetadataOrgPermissionsGet extends SfCommand<string[]> {
       required: false,
       helpValue: '<path/to/project/root>',
     }),
+    'target-org': Flags.optionalOrg({
+      char: 'o',
+      description: generalMessages.getMessage('flags.target-org.description'),
+      summary: generalMessages.getMessage('flags.target-org.summary'),
+      required: false,
+    }),
     'api-version': Flags.orgApiVersion({
       char: 'a',
       summary: generalMessages.getMessage('flags.api-version.summary'),
@@ -79,7 +85,9 @@ export default class AhMetadataOrgPermissionsGet extends SfCommand<string[]> {
 
   public async run(): Promise<string[]> {
     const { flags } = await this.parse(AhMetadataOrgPermissionsGet);
-    flags.root = CommandUtils.validateProjectPath(flags.root);
+    if (!flags['target-org']) {
+      flags.root = CommandUtils.validateProjectPath(flags.root);
+    }
     if (flags['output-file']) {
       flags['output-file'] = CommandUtils.validateFilePath(flags['output-file'], '--output-file');
     }
@@ -88,7 +96,7 @@ export default class AhMetadataOrgPermissionsGet extends SfCommand<string[]> {
     } else {
       this.log(messages.getMessage('message.running-get'));
     }
-    const alias = ProjectUtils.getOrgAlias(flags.root);
+    const alias = flags['target-org']?.getUsername() ?? ProjectUtils.getOrgAlias(flags.root) ?? '';
     const namespace = ProjectUtils.getOrgNamespace(flags.root);
     const connector = new SFConnector(
       alias,

@@ -154,7 +154,7 @@ Data does not import because found errors. Go to %s for see the errors by batch
 
 - Import data from another org with username or alias "aliasOrg"
 
-  <%= config.bin %> <%= command.id %> -s "aliasOrg" -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account",
+  <%= config.bin %> <%= command.id %> -o "aliasOrg" -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account",
 
 - Import data from extracted file with 50 records per batch
 

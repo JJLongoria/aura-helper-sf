@@ -54,6 +54,12 @@ export default class AhMetadataOrgApexExecute extends SfCommand<AhMetadataOrgApe
       required: false,
       helpValue: '<path/to/project/root>',
     }),
+    'target-org': Flags.optionalOrg({
+      char: 'o',
+      description: generalMessages.getMessage('flags.target-org.description'),
+      summary: generalMessages.getMessage('flags.target-org.summary'),
+      required: false,
+    }),
     'api-version': Flags.orgApiVersion({
       char: 'a',
       summary: generalMessages.getMessage('flags.api-version.summary'),
@@ -87,7 +93,9 @@ export default class AhMetadataOrgApexExecute extends SfCommand<AhMetadataOrgApe
 
   public async run(): Promise<AhMetadataOrgApexExecuteResult> {
     const { flags } = await this.parse(AhMetadataOrgApexExecute);
-    flags.root = CommandUtils.validateProjectPath(flags.root);
+    if (!flags['target-org']) {
+      flags.root = CommandUtils.validateProjectPath(flags.root);
+    }
     flags.file = CommandUtils.validateFilePath(flags.file, '--file');
     if (flags.progress) {
       this.log(messages.getMessage('message.executing-script'));
@@ -95,7 +103,7 @@ export default class AhMetadataOrgApexExecute extends SfCommand<AhMetadataOrgApe
       this.spinner.start(messages.getMessage('message.executing-script'));
     }
     try {
-      const alias = ProjectUtils.getOrgAlias(flags.root);
+      const alias = flags['target-org']?.getUsername() ?? ProjectUtils.getOrgAlias(flags.root) ?? '';
       const namespace = ProjectUtils.getOrgNamespace(flags.root);
       const connector = new SFConnector(
         alias,

@@ -143,10 +143,10 @@
                     "description": "Topic to work with Apex"
                   },
                   "permissions": {
-                    "description": "description for ah.metadata.org.permissions"
+                    "description": "Topic to work with Salesforce Org Permissions"
                   },
                   "special": {
-                    "description": "description for ah.metadata.org.special"
+                    "description": "Topic to work with special metadata types"
                   }
                 }
               }
