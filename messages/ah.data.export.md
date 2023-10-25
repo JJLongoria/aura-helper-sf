@@ -50,4 +50,4 @@ Data extracted succesfully on %s
 
 - Extract Accounts data with Records Types
 
-  <%= config.bin %> <%= command.id %> -q "Select Id, Name, BillingNumber, RecordType.DeveloperName from Account" -output-file "./export/accounts"
+  <%= config.bin %> <%= command.id %> -q "Select Id, Name, BillingNumber, RecordType.DeveloperName from Account" --output-file "./export/accounts"

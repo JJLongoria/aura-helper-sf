@@ -4,7 +4,7 @@ Describe Local Metadata Types.
 
 # description
 
-Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
+Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org
 
 # flags.all.summary
 
@@ -12,7 +12,7 @@ Describe all metadata types.
 
 # flags.all.description
 
-Describe all metadata types stored in your local project.
+Describe all metadata types from your auth org.
 
 # flags.type.summary
 
@@ -20,7 +20,7 @@ Describe the specified metadata types.
 
 # flags.type.description
 
-Describe the specified metadata types. You can select a single metadata or a list separated by commas. This option does not take effect if you choose describe all.
+Describe the specified metadata types. You can select a single metadata or a list separated by commas. This option does not take effect if you choose describe all
 
 # flags.group.summary
 
@@ -30,6 +30,14 @@ Group global Quick Actions into GlobalActions.
 
 Option to group global Quick Actions into GlobalActions group, false to list as object and item.
 
+# flags.download-all.summary
+
+Download from All Namespaces
+
+# flags.download-all.description
+
+Option to download all Metadata Types from any Namespaces (including managed packages). If this options is not selected, only download and retrieve data from your org namespace
+
 # flags.csv.summary
 
 Show result as CSV.
@@ -38,9 +46,13 @@ Show result as CSV.
 
 Option to show the result as CSV instead a table if not select --json flag
 
-# message.describe-local-types
+# message.describe-org-types
 
-Describing Local Metadata Types
+Describing Org Metadata Types
+
+# message.after-download
+
+%s downloaded
 
 # message.running-describe
 

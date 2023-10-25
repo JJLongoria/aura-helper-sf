@@ -34,8 +34,8 @@ Not permissions found to list
 
 - Get all available User permisions in your org and save output as JSON
 
-  <%= config.bin %> <%= command.id %> -o "path/to/the/output/permissions.json" --json
+  <%= config.bin %> <%= command.id %> --output-file "path/to/the/output/permissions.json" --json
 
 - Get all available User permisions in your org and save output as CSV
 
-  <%= config.bin %> <%= command.id %> -o "path/to/the/output/errors.txt" --csv
+  <%= config.bin %> <%= command.id %> --output-file "path/to/the/output/permissions.json" --csv

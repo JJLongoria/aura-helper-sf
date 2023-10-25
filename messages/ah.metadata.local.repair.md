@@ -90,4 +90,4 @@ You must select repair all or repair specific types
 
 - Repair all profiles from the project root redirect errors to a file
 
-  <%= config.bin %> <%= command.id %> -t "Profile" -o "path/to/the/output/checkResult.json""
+  <%= config.bin %> <%= command.id %> -t "Profile" --output-file "path/to/the/output/checkResult.json""
