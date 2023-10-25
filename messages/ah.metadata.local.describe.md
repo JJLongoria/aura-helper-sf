@@ -56,9 +56,13 @@ Not metadata types found to describe
 
 # examples
 
-- Describe all metadata types, showing progress and output to a file and show result as csv
+- Describe all metadata types, showing progress and show result as CSV and save output as CSV
 
-  <%= config.bin %> <%= command.id %> -a -p -s "path/to/the/output/file.txt" --csv
+  <%= config.bin %> <%= command.id %> -a -p -s "path/to/the/output/file.csv" --csv
+
+- Describe all metadata types, showing progress and show result as JSON and save output as JSON
+
+  <%= config.bin %> <%= command.id %> -a -p -s "path/to/the/output/file.json" --json
 
 - Describe CustomObject, CustomField, Profile and ValidationRule metadata types, showing progress and result as table
 

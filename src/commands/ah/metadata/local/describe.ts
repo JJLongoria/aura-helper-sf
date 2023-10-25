@@ -85,6 +85,8 @@ export default class AhMetadataLocalDescribe extends SfCommand<{ [key: string]: 
     }
     if (!flags.progress) {
       this.spinner.start(messages.getMessage('message.running-describe'));
+    } else {
+      this.log(messages.getMessage('message.running-describe'));
     }
     const alias = ProjectUtils.getOrgAlias(flags.root);
     const namespace = ProjectUtils.getOrgNamespace(flags.root);
@@ -163,8 +165,11 @@ export default class AhMetadataLocalDescribe extends SfCommand<{ [key: string]: 
       if (!FileChecker.isExists(baseDir)) {
         FileWriter.createFolderSync(baseDir);
       }
-      FileWriter.createFileSync(flags['output-file'], JSON.stringify(metadata, null, 2));
-      this.log(generalMessages.getMessage('message.output-saved', [flags.outputfile]));
+      const content = flags.csv
+        ? CommandUtils.transformMetadataTypesToCSV(metadata)
+        : JSON.stringify(metadata, null, 2);
+      FileWriter.createFileSync(flags['output-file'], content);
+      this.log(generalMessages.getMessage('message.output-saved', [flags['output-file']]));
     }
     return metadata;
   }

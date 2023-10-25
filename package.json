@@ -141,6 +141,9 @@
                 "subtopics": {
                   "apex": {
                     "description": "Topic to work with Apex"
+                  },
+                  "permissions": {
+                    "description": "description for ah.metadata.org.permissions"
                   }
                 }
               }
