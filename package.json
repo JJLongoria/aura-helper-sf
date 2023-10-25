@@ -144,6 +144,9 @@
                   },
                   "permissions": {
                     "description": "description for ah.metadata.org.permissions"
+                  },
+                  "special": {
+                    "description": "description for ah.metadata.org.special"
                   }
                 }
               }

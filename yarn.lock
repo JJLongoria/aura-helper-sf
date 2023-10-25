@@ -27,12 +27,6 @@
     "@aurahelper/xml-compressor" "^2.0.1"
     "@salesforce/core" "^5.3.11"
 
-"@aurahelper/core@G:\\\\Workspace\\\\NodeJS\\\\Aura Helper Framework\\\\ah-core":
-  version "2.5.0"
-  dependencies:
-    fs-extra "^9.1.0"
-    unzipper "^0.10.11"
-
 "@aurahelper/core@^2.0.0", "@aurahelper/core@^2.1.0", "@aurahelper/core@^2.2.4", "@aurahelper/core@^2.3.0", "@aurahelper/core@^2.4.3":
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/@aurahelper/core/-/core-2.4.3.tgz#d4f63a10e5ce0ff9dbb0724dce48edd885734abc"

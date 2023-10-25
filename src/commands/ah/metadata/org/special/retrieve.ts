@@ -3,48 +3,48 @@ import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { MetadataType, PathUtils, ProgressStatus, RetrieveResult, SpecialMetadata } from '@aurahelper/core';
 import { XMLCompressor } from '@aurahelper/xml-compressor';
-import { ProjectUtils } from '@aurahelper/core/dist/utils';
 import { SFConnector } from '@aurahelper/connector';
+import { ProjectUtils } from '@aurahelper/core/dist/utils';
 
 import CommandUtils from '../../../../../libs/utils/commandUtils';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('aura-helper-sf', 'ah.metadata.local.special.retrieve');
+const messages = Messages.loadMessages('aura-helper-sf', 'ah.metadata.org.special.retrieve');
 const generalMessages = Messages.loadMessages('aura-helper-sf', 'general');
 
 const sortOrderValues: string[] = Object.values(XMLCompressor.getSortOrderValues()) as string[];
 
-export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveResult> {
+export default class AhMetadataOrgSpecialRetrieve extends SfCommand<RetrieveResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = [
-    'ah:retrieve:special:local:metadata',
-    'ah:retrieve:special:metadata:local',
-    'ah:retrieve:local:metadata:special',
-    'ah:retrieve:local:special:metadata',
-    'ah:retrieve:metadata:local:special',
-    'ah:retrieve:metadata:special:local',
-    'ah:local:retrieve:metadata:special',
-    'ah:local:metadata:retrieve:special',
-    'ah:local:metadata:special:retrieve',
-    'ah:local:retrieve:special:metadata',
-    'ah:local:special:retrieve:metadata',
-    'ah:local:special:metadata:retrieve',
-    'ah:metadata:retrieve:local:special',
-    'ah:metadata:local:retrieve:special',
-    'ah:metadata:special:retrieve:local',
-    'ah:metadata:special:local:retrieve',
-    'ah:metadata:retrieve:special:local',
-    'ah:special:retrieve:metadata:local',
-    'ah:special:metadata:retrieve:local',
-    'ah:special:metadata:local:retrieve',
-    'ah:special:retrieve:local:metadata',
-    'ah:special:local:retrieve:metadata',
-    'ah:special:local:metadata:retrieve',
-    'ah:local:special:retrieve',
-    'ah:special:local:retrieve',
-    'ah:local:retrieve:special',
+    'ah:retrieve:special:org:metadata',
+    'ah:retrieve:special:metadata:org',
+    'ah:retrieve:org:metadata:special',
+    'ah:retrieve:org:special:metadata',
+    'ah:retrieve:metadata:org:special',
+    'ah:retrieve:metadata:special:org',
+    'ah:org:retrieve:metadata:special',
+    'ah:org:metadata:retrieve:special',
+    'ah:org:metadata:special:retrieve',
+    'ah:org:retrieve:special:metadata',
+    'ah:org:special:retrieve:metadata',
+    'ah:org:special:metadata:retrieve',
+    'ah:metadata:retrieve:org:special',
+    'ah:metadata:org:retrieve:special',
+    'ah:metadata:special:retrieve:org',
+    'ah:metadata:special:org:retrieve',
+    'ah:metadata:retrieve:special:org',
+    'ah:special:retrieve:metadata:org',
+    'ah:special:metadata:retrieve:org',
+    'ah:special:metadata:org:retrieve',
+    'ah:special:retrieve:org:metadata',
+    'ah:special:org:retrieve:metadata',
+    'ah:special:org:metadata:retrieve',
+    'ah:org:special:retrieve',
+    'ah:special:org:retrieve',
+    'ah:org:retrieve:special',
   ];
 
   public static readonly flags = {
@@ -77,11 +77,6 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
       char: 't',
       exclusive: ['all'],
     }),
-    'include-org': Flags.string({
-      summary: messages.getMessage('flags.include-org.summary'),
-      description: messages.getMessage('flags.include-org.description'),
-      char: 'i',
-    }),
     'download-all': Flags.boolean({
       summary: messages.getMessage('flags.download-all.summary'),
       description: messages.getMessage('flags.download-all.description'),
@@ -103,7 +98,7 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
 
   // eslint-disable-next-line sf-plugin/no-classes-in-command-return-type
   public async run(): Promise<RetrieveResult> {
-    const { flags } = await this.parse(AhMetadataLocalSpecialRetrieve);
+    const { flags } = await this.parse(AhMetadataOrgSpecialRetrieve);
     this.retrievedFinished = false;
     flags.root = CommandUtils.validateProjectPath(flags.root);
     if (!flags.all && !flags.type) {
@@ -128,13 +123,6 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
         namespace
       );
       connector.setMultiThread();
-      connector.onLoadingLocal(() => {
-        if (flags.progress) {
-          this.log(messages.getMessage('message.loading-local'));
-        } else {
-          this.spinner.status = messages.getMessage('message.loading-local');
-        }
-      });
       connector.onLoadingOrg(() => {
         if (flags.progress) {
           this.log(messages.getMessage('message.loading-org'));
@@ -174,23 +162,13 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
           ]);
         }
       });
-      let retrieveOut = new RetrieveResult('');
-      if (!flags['include-org']) {
-        retrieveOut = await connector.retrieveLocalSpecialTypes(
-          PathUtils.getAuraHelperSFTempFilesPath(),
-          types,
-          flags.compress,
-          flags['sort-order']
-        );
-      } else {
-        retrieveOut = await connector.retrieveMixedSpecialTypes(
-          PathUtils.getAuraHelperSFTempFilesPath(),
-          types,
-          flags['download-all'],
-          flags.compress,
-          flags['sort-order']
-        );
-      }
+      const retrieveOut = await connector.retrieveOrgSpecialTypes(
+        PathUtils.getAuraHelperSFDXTempFilesPath(),
+        types,
+        flags['download-all'],
+        flags.compress,
+        flags['sort-order']
+      );
       if (flags.progress) {
         this.log(messages.getMessage('message.retrieve-finished'));
       } else {

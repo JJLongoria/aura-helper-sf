@@ -117,7 +117,7 @@ export default class AhDataImport extends SfCommand<AhDataImportResult> {
       if (!flags.progress) {
         this.spinner.start(messages.getMessage('message.running-import'));
       }
-      this.cleanWorkspace(PathUtils.getAuraHelperSFDXTempFilesPath() + '/import-export');
+      this.cleanWorkspace(PathUtils.getAuraHelperSFTempFilesPath() + '/import-export');
       if (flags.source) {
         const response = await this.startExtractingData(flags);
         for (const data of response) {
@@ -189,7 +189,7 @@ export default class AhDataImport extends SfCommand<AhDataImportResult> {
       );
       const response = await connector.exportTreeData(
         flags.query ?? '',
-        PathUtils.getAuraHelperSFDXTempFilesPath() + '/export'
+        PathUtils.getAuraHelperSFTempFilesPath() + '/export'
       );
       return response;
     } catch (error) {
@@ -199,7 +199,7 @@ export default class AhDataImport extends SfCommand<AhDataImportResult> {
   }
 
   private async startImportingData(flags: Partial<AHDataImportFlags>, planData: ExportPlan[]): Promise<AnyJson> {
-    const tempFolder = PathUtils.getAuraHelperSFDXTempFilesPath() + '/import-export';
+    const tempFolder = PathUtils.getAuraHelperSFTempFilesPath() + '/import-export';
     try {
       const planFolder = PathUtils.getDirname(flags.file ?? '');
       await this.loadStoredRecordTypes(flags);
@@ -370,7 +370,7 @@ export default class AhDataImport extends SfCommand<AhDataImportResult> {
     } else {
       this.spinner.status = messages.getMessage('message.creating-batches');
     }
-    const batchFolder = PathUtils.getAuraHelperSFDXTempFilesPath() + '/import-export';
+    const batchFolder = PathUtils.getAuraHelperSFTempFilesPath() + '/import-export';
     this.totalBatches = 0;
     let totalRecords = 0;
     for (const plan of planData) {
@@ -448,7 +448,7 @@ export default class AhDataImport extends SfCommand<AhDataImportResult> {
       } else {
         this.spinner.status = messages.getMessage('message.start-insert-job');
       }
-      const batchFolder = PathUtils.getAuraHelperSFDXTempFilesPath() + '/import-export';
+      const batchFolder = PathUtils.getAuraHelperSFTempFilesPath() + '/import-export';
 
       for (const plan of planData) {
         const mastersFolder = plan.sobject + '/masters';
