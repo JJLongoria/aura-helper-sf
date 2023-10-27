@@ -14,14 +14,6 @@ Create Destructive XML file to delete files before deploy new changes.
 
 Option to create the Descructive XML file to deploy it before package file (delete files before deploy new changes insted delete files after deploy changes).
 
-# flags.by-type.summary
-
-Create Destructive XML file to delete files before deploy new changes.
-
-# flags.by-type.description
-
-Merge packages by type, that is, the package XML files into ine package xml file and destructive files into one destructive. Default option.
-
 # flags.ignore.summary
 
 Use ignore file to ignore metadata types.

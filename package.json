@@ -153,7 +153,12 @@
             }
           },
           "package": {
-            "description": "Topic to work with Salesforce Packages XML Files or Create Package Files"
+            "description": "Topic to work with Salesforce Packages XML Files or Create Package Files",
+            "subtopics": {
+              "git": {
+                "description": "Topic to work directly with git to extract information from git commits to create package files"
+              }
+            }
           }
         }
       }
