@@ -14,11 +14,11 @@ Query to Extract Data
 
 Query to extract data. You can use a simple query (Select [fields] from [object] [where] ...) or a complex query (select [fields], [query], [query] from [object] [where] ...) for export data in tree format
 
-# flags.output-path.summary
+# flags.output-dir.summary
 
 Generated Files Output Path
 
-# flags.output-path.description
+# flags.output-dir.description
 
 Path to save the generated output files. By default save result on <actualDir>/export
 

@@ -48,9 +48,9 @@ export default class AhDataExport extends SfCommand<ExportTreeDataResult[]> {
       helpValue: 'Select ... from ...',
       required: true,
     }),
-    'output-path': Flags.directory({
-      summary: messages.getMessage('flags.output-path.summary'),
-      description: messages.getMessage('flags.output-path.description'),
+    'output-dir': Flags.directory({
+      summary: messages.getMessage('flags.output-dir.summary'),
+      description: messages.getMessage('flags.output-dir.description'),
       helpValue: '<path/to/output/file>',
       default: './export',
     }),
@@ -66,7 +66,7 @@ export default class AhDataExport extends SfCommand<ExportTreeDataResult[]> {
     if (!flags['target-org']) {
       flags.root = CommandUtils.validateProjectPath(flags.root);
     }
-    flags['output-path'] = CommandUtils.validateFolderPath(flags['output-path'], 'output-path');
+    flags['output-dir'] = CommandUtils.validateFolderPath(flags['output-dir'], 'output-dir');
     try {
       if (!flags.progress) {
         this.spinner.start(messages.getMessage('message.running-export'));
@@ -86,11 +86,11 @@ export default class AhDataExport extends SfCommand<ExportTreeDataResult[]> {
         namespace
       );
       connector.setMultiThread();
-      const response = await connector.exportTreeData(flags.query, flags['output-path'], flags.prefix);
+      const response = await connector.exportTreeData(flags.query, flags['output-dir'], flags.prefix);
       if (flags.progress) {
-        this.log(messages.getMessage('message.extracted-data-success', [flags['output-path']]));
+        this.log(messages.getMessage('message.extracted-data-success', [flags['output-dir']]));
       } else {
-        this.spinner.stop(messages.getMessage('message.extracted-data-success', [flags['output-path']]));
+        this.spinner.stop(messages.getMessage('message.extracted-data-success', [flags['output-dir']]));
       }
       return response;
     } catch (error) {

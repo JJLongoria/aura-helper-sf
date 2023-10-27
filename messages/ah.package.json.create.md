@@ -14,11 +14,11 @@ Source JSON file
 
 Metadata JSON file path to create the Package or Destructive file
 
-# flags.output-path.summary
+# flags.output-dir.summary
 
 Generated Files Output Path
 
-# flags.output-path.description
+# flags.output-dir.description
 
 Path to save the generated files. By default save result on <actualDir>
 

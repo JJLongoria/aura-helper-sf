@@ -68,11 +68,11 @@ Merge Files Strategy. You can merge the selected files using different strategie
 - full-package (fp): Merge all files into one package file.
 - full-destructive (fd): Merge all files into one destructive file.
 
-# flags.output-path.summary
+# flags.output-dir.summary
 
 Generated Files Output Path
 
-# flags.output-path.description
+# flags.output-dir.description
 
 Path to save the generated files. By default save result on <actualDir>
 

@@ -38,11 +38,11 @@ Output file
 
 Path to file for redirect the output
 
-# flags.output-path.summary
+# flags.output-dir.summary
 
 Output file
 
-# flags.output-path.description
+# flags.output-dir.description
 
 Path to file for redirect the output
 

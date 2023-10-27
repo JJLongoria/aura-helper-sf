@@ -31,7 +31,7 @@ export interface AhPackageGitCreateFlags {
   'ignore-file': string;
   'ignore-destructive': boolean;
   'ignore-destructive-file': string;
-  'output-path': string;
+  'output-dir': string;
   'delete-before': boolean;
 }
 
@@ -117,9 +117,9 @@ export default class AhPackageGitCreate extends SfCommand<TypesFromGit | Package
       default: './' + IGNORE_FILE_NAME,
       helpValue: '<path/to/ignore/file>',
     }),
-    'output-path': Flags.directory({
-      summary: messages.getMessage('flags.output-path.summary'),
-      description: messages.getMessage('flags.output-path.description'),
+    'output-dir': Flags.directory({
+      summary: messages.getMessage('flags.output-dir.summary'),
+      description: messages.getMessage('flags.output-dir.description'),
       helpValue: '<path/to/output/file>',
       default: './',
     }),
@@ -133,8 +133,8 @@ export default class AhPackageGitCreate extends SfCommand<TypesFromGit | Package
   public async run(): Promise<TypesFromGit | PackageGeneratorResult> {
     const { flags } = await this.parse(AhPackageGitCreate);
     flags.root = CommandUtils.validateProjectPath(flags.root);
-    if (flags['output-path']) {
-      flags['output-path'] = CommandUtils.validateFolderPath(flags['output-path'], '--output-path');
+    if (flags['output-dir']) {
+      flags['output-dir'] = CommandUtils.validateFolderPath(flags['output-dir'], '--output-dir');
     }
     if (flags.progress) {
       this.log(messages.getMessage('message.running-crate-package'));
@@ -224,7 +224,7 @@ export default class AhPackageGitCreate extends SfCommand<TypesFromGit | Package
     const packageGenerator = new PackageGenerator(
       flags['api-version'] ?? ProjectUtils.getProjectConfig(flags.root ?? '')?.sourceApiVersion
     ).setExplicit();
-    const outputPath = flags['output-path'] ?? '';
+    const outputPath = flags['output-dir'] ?? '';
     if (
       typesFromGit.toDeploy &&
       (flags.type?.toLowerCase() === 'package' ||

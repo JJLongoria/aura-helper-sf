@@ -18,7 +18,7 @@ export interface AhPackageMergeFlags {
   'ignore-file': string;
   'ignore-destructive': boolean;
   'ignore-destructive-file': string;
-  'output-path': string;
+  'output-dir': string;
   strategy: string;
 }
 
@@ -85,9 +85,9 @@ export default class AhPackageMerge extends SfCommand<PackageGeneratorResult> {
       default: './' + IGNORE_FILE_NAME,
       helpValue: '<path/to/ignore/file>',
     }),
-    'output-path': Flags.directory({
-      summary: messages.getMessage('flags.output-path.summary'),
-      description: messages.getMessage('flags.output-path.description'),
+    'output-dir': Flags.directory({
+      summary: messages.getMessage('flags.output-dir.summary'),
+      description: messages.getMessage('flags.output-dir.description'),
       helpValue: '<path/to/output/file>',
       default: './',
     }),
@@ -126,8 +126,8 @@ export default class AhPackageMerge extends SfCommand<PackageGeneratorResult> {
   public async run(): Promise<PackageGeneratorResult> {
     const { flags } = await this.parse(AhPackageMerge);
     flags.root = CommandUtils.validateProjectPath(flags.root);
-    if (flags['output-path']) {
-      flags['output-path'] = CommandUtils.validateFolderPath(flags['output-path'], '--output-path');
+    if (flags['output-dir']) {
+      flags['output-dir'] = CommandUtils.validateFolderPath(flags['output-dir'], '--output-dir');
     }
     if (flags.progress) {
       this.log(messages.getMessage('message.runnig-merge'));
@@ -160,7 +160,7 @@ export default class AhPackageMerge extends SfCommand<PackageGeneratorResult> {
       packageGenerator.setDestructiveIgnoreFile(flags['ignore-destructive-file'] ?? '');
     }
     packageGenerator.setBeforeDeploy(flags['delete-before']);
-    const outputPath = flags['output-path'] ?? '';
+    const outputPath = flags['output-dir'] ?? '';
     const files = flags.file ?? [];
     if (this.byTypeStrategy(flags)) {
       packageGenerator.setMergePackagesFiles().setMergeDestructives();

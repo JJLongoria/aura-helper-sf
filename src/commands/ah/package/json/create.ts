@@ -20,7 +20,7 @@ export interface AhPackageJSONCreateFlags {
   'delete-before'?: boolean;
   'to-delete'?: boolean;
   wildcards?: boolean;
-  'output-path'?: string;
+  'output-dir'?: string;
 }
 
 Messages.importMessagesDirectory(__dirname);
@@ -95,9 +95,9 @@ export default class AhPackageJsonCreate extends SfCommand<PackageGeneratorResul
       summary: messages.getMessage('flags.wildcards.summary'),
       description: messages.getMessage('flags.wildcards.description'),
     }),
-    'output-path': Flags.directory({
-      summary: messages.getMessage('flags.output-path.summary'),
-      description: messages.getMessage('flags.output-path.description'),
+    'output-dir': Flags.directory({
+      summary: messages.getMessage('flags.output-dir.summary'),
+      description: messages.getMessage('flags.output-dir.description'),
       helpValue: '<path/to/output/file>',
       default: './',
     }),
@@ -106,8 +106,8 @@ export default class AhPackageJsonCreate extends SfCommand<PackageGeneratorResul
   public async run(): Promise<PackageGeneratorResult> {
     const { flags } = await this.parse(AhPackageJsonCreate);
     flags.root = CommandUtils.validateProjectPath(flags.root);
-    if (flags['output-path']) {
-      flags['output-path'] = CommandUtils.validateFolderPath(flags['output-path'], '--output-path');
+    if (flags['output-dir']) {
+      flags['output-dir'] = CommandUtils.validateFolderPath(flags['output-dir'], '--output-dir');
     }
     if (flags.progress) {
       this.log(messages.getMessage('message.running-crate-package'));
@@ -144,7 +144,7 @@ export default class AhPackageJsonCreate extends SfCommand<PackageGeneratorResul
   ): PackageGeneratorResult {
     const result = new PackageGeneratorResult();
     const root = flags.root ?? '';
-    const outputpath = flags['output-path'] ?? '';
+    const outputpath = flags['output-dir'] ?? '';
     const packageGenerator = new PackageGenerator(
       flags['api-version'] ?? ProjectUtils.getProjectConfig(root)?.sourceApiVersion
     ).setExplicit();

@@ -22,11 +22,11 @@ Path to the ignore file.
 
 Path to the ignore file. Use this if you not want to use the project root ignore file or have different name. By default use %s file from your project root
 
-# flags.output-path.summary
+# flags.output-dir.summary
 
 Generated Files Output Path
 
-# flags.output-path.description
+# flags.output-dir.description
 
 Path to save the generated files. By default save result on <actualDir>
 
