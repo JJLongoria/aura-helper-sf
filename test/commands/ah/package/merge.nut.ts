@@ -1,7 +1,7 @@
 // import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 // import { expect } from 'chai';
 
-describe('ah version NUTs', () => {
+describe('ah package merge NUTs', () => {
   // let session: TestSession;
 
   before(async () => {
@@ -14,7 +14,7 @@ describe('ah version NUTs', () => {
 
   it('should display provided name', () => {
     // const name = 'World';
-    // const command = `ah version --name ${name}`;
+    // const command = `ah package merge --name ${name}`;
     // const output = execCmd(command, { ensureExitCode: 0 }).shellOutput.stdout;
     // expect(output).to.contain(name);
   });

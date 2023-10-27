@@ -46,11 +46,11 @@ Ignore check or repair using Ignore File.
 
 Option to ignore to check or repair the metadata included in ignore file.
 
-# flags.file.summary
+# flags.ignore-file.summary
 
 Path to the ignore file.
 
-# flags.file.description
+# flags.ignore-file.description
 
 Path to the ignore file. Use this if you not want to use the project root ignore file or have different name. By default use %s file from your project root
 

@@ -20,7 +20,7 @@ export interface AhMetadataLocalRepairFlags {
   compress: boolean;
   'sort-order': string;
   ignore: boolean;
-  file: string;
+  'ignore-file': string;
   'output-file': string;
 }
 
@@ -94,9 +94,9 @@ export default class AhMetadataLocalRepair extends SfCommand<AnyJson> {
       summary: messages.getMessage('flags.ignore.summary'),
       description: messages.getMessage('flags.ignore.description'),
     }),
-    file: Flags.file({
-      summary: messages.getMessage('flags.file.summary'),
-      description: messages.getMessage('flags.file.description', [IGNORE_FILE_NAME]),
+    'ignore-file': Flags.file({
+      summary: messages.getMessage('flags.ignore-file.summary'),
+      description: messages.getMessage('flags.ignore-file.description', [IGNORE_FILE_NAME]),
       default: './' + IGNORE_FILE_NAME,
       helpValue: '<path/to/ignore/file>',
     }),
@@ -142,7 +142,7 @@ export default class AhMetadataLocalRepair extends SfCommand<AnyJson> {
         .setTypesToRepair(types)
         .setCompress(flags.compress)
         .setSortOrder(flags['sort-order'])
-        .setIgnoreFile(flags.ignore ? flags.file : undefined);
+        .setIgnoreFile(flags.ignore ? flags['ignore-file'] : undefined);
       manager.onStartObject((status: ProgressStatus) => {
         if (flags.progress) {
           if (flags.progress) {
@@ -206,11 +206,11 @@ export default class AhMetadataLocalRepair extends SfCommand<AnyJson> {
       } else {
         this.spinner.status = messages.getMessage('message.validate-file');
       }
-      if (!flags.file) {
-        flags.file = (flags.root ?? '') + '/' + IGNORE_FILE_NAME;
+      if (!flags['ignore-file']) {
+        flags['ignore-file'] = (flags.root ?? '') + '/' + IGNORE_FILE_NAME;
       }
-      flags.file = CommandUtils.validateFilePath(flags.file, '--file');
-      CommandUtils.validateJSONFile(flags.file, '--file');
+      flags['ignore-file'] = CommandUtils.validateFilePath(flags['ignore-file'], '--file');
+      CommandUtils.validateJSONFile(flags['ignore-file'], '--file');
     }
   }
 }

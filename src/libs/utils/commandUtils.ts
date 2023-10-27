@@ -33,15 +33,15 @@ export default class CommandUtils {
     return result;
   }
 
-  public static getPaths(paths: string | string[], isFolder?: boolean): string[] {
+  public static getPaths(paths: string | string[], flagName: string, isFolder?: boolean): string[] {
     const result: string[] = [];
     const resultTmp: string[] = Utils.forceArray<string>(paths);
     for (const typeTmp of resultTmp) {
       const path = typeTmp.trim();
       if (!isFolder) {
-        result.push(Validator.validateFilePath(path.trim()));
+        result.push(CommandUtils.validateFilePath(path.trim(), flagName));
       } else {
-        result.push(Validator.validateFolderPath(path.trim()));
+        result.push(Validator.validateFolderPath(path.trim(), flagName));
       }
     }
     return result;
