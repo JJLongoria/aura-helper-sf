@@ -35,8 +35,10 @@
     fs-extra "^9.1.0"
     unzipper "^0.10.11"
 
-"@aurahelper/core@file:../../NodeJS/Aura Helper Framework/ah-core":
+"@aurahelper/core@^2.5.0":
   version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/core/-/core-2.5.0.tgz#71889bab17de28543515094bd550c3fd2f6d5065"
+  integrity sha512-5IYMQDBDjesPnhcb2j2ludgX2vKIQrRxFBSpmTYdT40RAnz/w/eVzKdo6nTft+6I88J5O6uPeYM13ZHOs8fMLw==
   dependencies:
     fs-extra "^9.1.0"
     unzipper "^0.10.11"
