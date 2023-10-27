@@ -39,10 +39,6 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('aura-helper-sf', 'ah.package.git.create');
 const generalMessages = Messages.loadMessages('aura-helper-sf', 'general');
 
-export type AhPackageGitCreateResult = {
-  path: string;
-};
-
 const DESTRUCT_BEFORE_FILENAME = 'destructiveChanges.xml';
 const DESTRUCT_AFTER_FILENAME = 'destructiveChangesPost.xml';
 const PACKAGE_FILENAME = 'package.xml';
@@ -272,7 +268,7 @@ export default class AhPackageGitCreate extends SfCommand<TypesFromGit | Package
     if (flags.progress) {
       this.log(messages.getMessage('message.file-created', [outputPath]));
     } else {
-      this.spinner.status = messages.getMessage('message.file-created', [outputPath]);
+      this.spinner.stop(messages.getMessage('message.file-created', [outputPath]));
     }
     return result;
   }

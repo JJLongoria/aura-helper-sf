@@ -46,6 +46,10 @@ Describing Local Metadata Types
 
 Describing Types...
 
+# message.finished
+
+Describe Types finished
+
 # error.missing-types
 
 You must select describe all or describe specific types

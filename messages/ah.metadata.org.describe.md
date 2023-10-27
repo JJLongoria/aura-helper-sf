@@ -62,6 +62,10 @@ Describing Types...
 
 You must select describe all or describe specific types
 
+# message.finished
+
+Describe Types finished
+
 # error.no-data
 
 Not metadata types found to describe

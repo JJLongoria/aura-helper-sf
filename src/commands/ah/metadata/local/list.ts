@@ -128,6 +128,11 @@ export default class AhMetadataLocalList extends SfCommand<MetadataDetail[]> {
       FileWriter.createFileSync(flags['output-file'], content);
       this.log(generalMessages.getMessage('message.output-saved', [flags['output-file']]));
     }
+    if (!flags.progress) {
+      this.spinner.stop(messages.getMessage('message.finished'));
+    } else {
+      this.log(messages.getMessage('message.finished'));
+    }
     return metadata;
   }
 }

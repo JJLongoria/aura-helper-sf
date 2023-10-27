@@ -157,6 +157,9 @@
             "subtopics": {
               "git": {
                 "description": "Topic to work directly with git to extract information from git commits to create package files"
+              },
+              "json": {
+                "description": "Topic to work with the Aura Helper Metadata JSON Files to craete the package or destructive files"
               }
             }
           }

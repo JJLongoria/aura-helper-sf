@@ -18,6 +18,10 @@ Option to show the result as CSV instead a table if not select --json flag
 
 Getting all available User Permisions...
 
+# message.finished
+
+Getting Permissions finished
+
 # error.no-data
 
 Not permissions found to list

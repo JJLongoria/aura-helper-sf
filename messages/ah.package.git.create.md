@@ -1,10 +1,10 @@
 # summary
 
-Summary of a command.
+Create a Package XML file and/or Destructive XML file from Git Changes
 
 # description
 
-More information about a command. Don't repeat the summary.
+Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files
 
 # flags.ignore.summary
 

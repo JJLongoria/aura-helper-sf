@@ -1,19 +1,28 @@
 /* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
-import { Messages } from '@salesforce/core';
+import { Messages, Org } from '@salesforce/core';
 import { FileChecker, FileWriter, MetadataDetail, MetadataType, PathUtils } from '@aurahelper/core';
 import { ProjectUtils, Utils } from '@aurahelper/core/dist/utils';
 import { SFConnector } from '@aurahelper/connector';
 
 import CommandUtils from '../../../../libs/utils/commandUtils';
 
+export interface AhMetadataOrgDescribeFlags {
+  root?: string;
+  'target-org'?: Org;
+  'api-version'?: string;
+  progress?: boolean;
+  all?: boolean;
+  type?: string[];
+  group?: boolean;
+  'download-all'?: boolean;
+  'output-file'?: string;
+  csv?: boolean;
+}
+
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('aura-helper-sf', 'ah.metadata.org.describe');
 const generalMessages = Messages.loadMessages('aura-helper-sf', 'general');
-
-export type AhMetadataOrgDescribeResult = {
-  path: string;
-};
 
 export default class AhMetadataOrgDescribe extends SfCommand<{ [key: string]: MetadataType }> {
   public static readonly summary = messages.getMessage('summary');
@@ -168,6 +177,16 @@ export default class AhMetadataOrgDescribe extends SfCommand<{ [key: string]: Me
         this.log(messages.getMessage('error.no-data'));
       }
     }
+    this.saveOutputFile(flags, metadata);
+    if (!flags.progress) {
+      this.spinner.stop(messages.getMessage('message.finished'));
+    } else {
+      this.log(messages.getMessage('message.finished'));
+    }
+    return metadata;
+  }
+
+  private saveOutputFile(flags: Partial<AhMetadataOrgDescribeFlags>, metadata: { [key: string]: MetadataType }): void {
     if (flags['output-file']) {
       const baseDir = PathUtils.getDirname(flags['output-file']);
       if (!FileChecker.isExists(baseDir)) {
@@ -179,6 +198,5 @@ export default class AhMetadataOrgDescribe extends SfCommand<{ [key: string]: Me
       FileWriter.createFileSync(flags['output-file'], content);
       this.log(generalMessages.getMessage('message.output-saved', [flags['output-file']]));
     }
-    return metadata;
   }
 }

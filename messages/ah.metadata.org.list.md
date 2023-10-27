@@ -18,6 +18,10 @@ Option to show the result as CSV instead a table if not select --json flag.
 
 Listing Types...
 
+# message.finished
+
+Listing Types finished
+
 # error.no-data
 
 Not metadata types found to list
