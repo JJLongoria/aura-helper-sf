@@ -95,20 +95,15 @@ export default class AhMetadataOrgList extends SfCommand<MetadataDetail[]> {
         } else {
           const datatable = CommandUtils.transformMetadataDetailsToTable(metadataDetails);
           this.table(datatable as never, {
-            columns: [
-              {
-                key: 'name',
-                label: 'Name',
-              },
-              {
-                key: 'directory',
-                label: 'Directory',
-              },
-              {
-                key: 'suffix',
-                label: 'Suffix',
-              },
-            ] as never,
+            name: {
+              header: 'Name',
+            },
+            directory: {
+              header: 'Directory',
+            },
+            suffix: {
+              header: 'Suffix',
+            },
           });
         }
       } else {

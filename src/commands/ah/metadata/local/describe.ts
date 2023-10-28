@@ -132,29 +132,20 @@ export default class AhMetadataLocalDescribe extends SfCommand<{ [key: string]: 
           this.log(csvData);
         } else {
           const datatable = CommandUtils.transformMetadataTypesToTable(metadata);
-          this.table(
-            datatable as never,
-            {
-              columns: [
-                {
-                  key: 'type',
-                  label: 'Metadata Type',
-                },
-                {
-                  key: 'object',
-                  label: 'Metadata Object',
-                },
-                {
-                  key: 'item',
-                  label: 'Metadata Item',
-                },
-                {
-                  key: 'path',
-                  label: 'Path',
-                },
-              ],
-            } as never
-          );
+          this.table(datatable as never, {
+            type: {
+              header: 'Metadata Type',
+            },
+            object: {
+              header: 'Metadata Object',
+            },
+            item: {
+              header: 'Metadata Item',
+            },
+            path: {
+              header: 'Path',
+            },
+          });
         }
       } else {
         this.log(messages.getMessage('error.no-data'));

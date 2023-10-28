@@ -153,24 +153,18 @@ export default class AhMetadataOrgDescribe extends SfCommand<{ [key: string]: Me
         } else {
           const datatable = CommandUtils.transformMetadataTypesToTable(metadata);
           this.table(datatable as never, {
-            columns: [
-              {
-                key: 'type',
-                label: 'Metadata Type',
-              },
-              {
-                key: 'object',
-                label: 'Metadata Object',
-              },
-              {
-                key: 'item',
-                label: 'Metadata Item',
-              },
-              {
-                key: 'path',
-                label: 'Path',
-              },
-            ] as never,
+            type: {
+              header: 'Metadata Type',
+            },
+            object: {
+              header: 'Metadata Object',
+            },
+            item: {
+              header: 'Metadata Item',
+            },
+            path: {
+              header: 'Path',
+            },
           });
         }
       } else {

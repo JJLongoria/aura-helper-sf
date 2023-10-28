@@ -97,20 +97,15 @@ export default class AhMetadataLocalList extends SfCommand<MetadataDetail[]> {
         } else {
           const datatable = CommandUtils.transformMetadataDetailsToTable(metadata);
           this.table(datatable as never, {
-            columns: [
-              {
-                key: 'name',
-                label: 'Name',
-              },
-              {
-                key: 'directory',
-                label: 'Directory',
-              },
-              {
-                key: 'suffix',
-                label: 'Suffix',
-              },
-            ] as never,
+            name: {
+              header: 'Name',
+            },
+            directory: {
+              header: 'Directory',
+            },
+            suffix: {
+              header: 'Suffix',
+            },
           });
         }
       } else {

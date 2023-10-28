@@ -114,12 +114,9 @@ export default class AhMetadataOrgPermissionsGet extends SfCommand<string[]> {
         } else {
           const datatable = CommandUtils.transformPermissionsToTable(permissions);
           this.table(datatable as never, {
-            columns: [
-              {
-                key: 'name',
-                label: 'API Name',
-              },
-            ] as never,
+            name: {
+              header: 'API Name',
+            },
           });
         }
       } else {
