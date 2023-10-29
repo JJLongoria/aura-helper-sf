@@ -1,4 +1,3 @@
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { ProjectUtils } from '@aurahelper/core/dist/utils';
@@ -18,23 +17,6 @@ export default class AhMetadataOrgApexExecute extends SfCommand<AhMetadataOrgApe
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = [
-    'ah:metadata:execute:org:apex',
-    'ah:metadata:apex:org:execute',
-    'ah:metadata:org:execute:apex',
-    'ah:org:metadata:apex:execute',
-    'ah:org:execute:metadata:apex',
-    'ah:org:apex:metadata:execute',
-    'ah:org:apex:execute:metadata',
-    'ah:apex:metadata:execute:org',
-    'ah:apex:metadata:org:execute',
-    'ah:apex:execute:org:metadata',
-    'ah:apex:org:metadata:execute',
-    'ah:apex:org:execute:metadata',
-    'ah:execute:apex:metadata:org',
-    'ah:execute:apex:org:metadata',
-    'ah:execute:metadata:apex:org',
-    'ah:execute:org:apex:metadata',
-    'ah:execute:metadata:org:apex',
     'ah:execute:org:apex',
     'ah:execute:apex:org',
     'ah:apex:execute:org',

@@ -1,4 +1,3 @@
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
 import { FileChecker, FileWriter, MetadataDetail, PathUtils } from '@aurahelper/core';
@@ -16,13 +15,6 @@ export default class AhMetadataLocalList extends SfCommand<MetadataDetail[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = [
-    'ah:list:local:metadata',
-    'ah:list:metadata:local',
-    'ah:metadata:list:local',
-    'ah:local:metadata:list',
-    'ah:local:list:metadata',
-  ];
 
   public static readonly flags = {
     root: Flags.directory({

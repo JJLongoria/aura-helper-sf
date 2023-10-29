@@ -28,7 +28,7 @@ export default class AhVersion extends SfCommand<AhVersionResult> {
       const packageDir = dirName + '/package.json';
       const content: string = FileReader.readFileSync(packageDir);
       const config = JSON.parse(content) as PackageFile;
-      this.log(`Aura Helper SFDX Version: v${config.version}`);
+      this.log(`Aura Helper SF Version: v${config.version}`);
       resolve({ version: config.version });
     });
   }

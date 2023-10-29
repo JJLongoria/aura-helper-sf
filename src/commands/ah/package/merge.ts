@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { PackageGeneratorResult } from '@aurahelper/core';
@@ -32,7 +31,6 @@ export default class AhPackageMerge extends SfCommand<PackageGeneratorResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = ['ah:merge:package'];
 
   public static readonly flags = {
     root: Flags.directory({

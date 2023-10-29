@@ -1,4 +1,3 @@
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
 import { ProjectUtils } from '@aurahelper/core/dist/utils';
@@ -16,29 +15,6 @@ export default class AhMetadataOrgPermissionsGet extends SfCommand<string[]> {
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = [
-    'ah:metadata:permissions:org:get',
-    'ah:metadata:get:org:permissions',
-    'ah:metadata:get:permissions:org',
-    'ah:metadata:permissions:get:org',
-    'ah:metadata:org:permissions:get',
-    'ah:org:permissions:metadata:get',
-    'ah:org:metadata:permissions:get',
-    'ah:org:get:metadata:permissions',
-    'ah:org:get:permissions:metadata',
-    'ah:org:permissions:get:metadata',
-    'ah:org:metadata:get:permissions',
-    'ah:permissions:org:metadata:get',
-    'ah:permissions:org:get:metadata',
-    'ah:permissions:metadata:org:get',
-    'ah:permissions:get:org:metadata',
-    'ah:permissions:get:metadata:org',
-    'ah:permissions:metadata:get:org',
-    'ah:get:org:metadata:permissions',
-    'ah:get:permissions:org:metadata',
-    'ah:get:metadata:org:permissions',
-    'ah:get:metadata:permissions:org',
-    'ah:get:permissions:metadata:org',
-    'ah:get:org:permissions:metadata',
     'ah:org:permissions:get',
     'ah:org:get:permissions',
     'ah:get:org:permissions',

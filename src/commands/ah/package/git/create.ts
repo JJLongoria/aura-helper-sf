@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import {
@@ -49,13 +48,6 @@ export default class AhPackageGitCreate extends SfCommand<TypesFromGit | Package
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = [
-    'ah:create:git:package',
-    'ah:create:package:git',
-    'ah:git:create:package',
-    'ah:git:package:create',
-    'ah:package:create:git',
-  ];
 
   public static readonly flags = {
     root: Flags.directory({

@@ -1,5 +1,4 @@
 /* eslint-disable sf-plugin/no-classes-in-command-return-type */
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { MetadataType, PackageGeneratorResult } from '@aurahelper/core';
@@ -36,13 +35,6 @@ export default class AhPackageJsonCreate extends SfCommand<PackageGeneratorResul
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = [
-    'ah:create:json:package',
-    'ah:create:package:json',
-    'ah:json:create:package',
-    'ah:json:package:create',
-    'ah:package:create:json',
-  ];
 
   public static readonly flags = {
     root: Flags.directory({

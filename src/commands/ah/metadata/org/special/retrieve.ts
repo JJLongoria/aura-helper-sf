@@ -1,4 +1,3 @@
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { MetadataType, PathUtils, ProgressStatus, RetrieveResult, SpecialMetadata } from '@aurahelper/core';
@@ -18,34 +17,7 @@ export default class AhMetadataOrgSpecialRetrieve extends SfCommand<RetrieveResu
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = [
-    'ah:retrieve:special:org:metadata',
-    'ah:retrieve:special:metadata:org',
-    'ah:retrieve:org:metadata:special',
-    'ah:retrieve:org:special:metadata',
-    'ah:retrieve:metadata:org:special',
-    'ah:retrieve:metadata:special:org',
-    'ah:org:retrieve:metadata:special',
-    'ah:org:metadata:retrieve:special',
-    'ah:org:metadata:special:retrieve',
-    'ah:org:retrieve:special:metadata',
-    'ah:org:special:retrieve:metadata',
-    'ah:org:special:metadata:retrieve',
-    'ah:metadata:retrieve:org:special',
-    'ah:metadata:org:retrieve:special',
-    'ah:metadata:special:retrieve:org',
-    'ah:metadata:special:org:retrieve',
-    'ah:metadata:retrieve:special:org',
-    'ah:special:retrieve:metadata:org',
-    'ah:special:metadata:retrieve:org',
-    'ah:special:metadata:org:retrieve',
-    'ah:special:retrieve:org:metadata',
-    'ah:special:org:retrieve:metadata',
-    'ah:special:org:metadata:retrieve',
-    'ah:org:special:retrieve',
-    'ah:special:org:retrieve',
-    'ah:org:retrieve:special',
-  ];
+  public static readonly aliases = ['ah:org:special:retrieve', 'ah:special:org:retrieve', 'ah:org:retrieve:special'];
 
   public static readonly flags = {
     root: Flags.directory({

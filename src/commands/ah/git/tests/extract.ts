@@ -11,19 +11,10 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('aura-helper-sf', 'ah.git.tests.extract');
 const generalMessages = Messages.loadMessages('aura-helper-sf', 'general');
 
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 export default class AhGitTestsExtract extends SfCommand<string | string[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = [
-    'ah:extract:git:test',
-    'ah:extract:test:git',
-    'ah:git:extract:test',
-    'ah:git:test:extract',
-    'ah:test:extract:git',
-    'ah:test:git:extract',
-  ];
 
   public static readonly flags = {
     root: Flags.directory({

@@ -1,4 +1,3 @@
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, SfError } from '@salesforce/core';
 import { MetadataType, PathUtils, ProgressStatus, RetrieveResult, SpecialMetadata } from '@aurahelper/core';
@@ -19,29 +18,6 @@ export default class AhMetadataLocalSpecialRetrieve extends SfCommand<RetrieveRe
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = [
-    'ah:retrieve:special:local:metadata',
-    'ah:retrieve:special:metadata:local',
-    'ah:retrieve:local:metadata:special',
-    'ah:retrieve:local:special:metadata',
-    'ah:retrieve:metadata:local:special',
-    'ah:retrieve:metadata:special:local',
-    'ah:local:retrieve:metadata:special',
-    'ah:local:metadata:retrieve:special',
-    'ah:local:metadata:special:retrieve',
-    'ah:local:retrieve:special:metadata',
-    'ah:local:special:retrieve:metadata',
-    'ah:local:special:metadata:retrieve',
-    'ah:metadata:retrieve:local:special',
-    'ah:metadata:local:retrieve:special',
-    'ah:metadata:special:retrieve:local',
-    'ah:metadata:special:local:retrieve',
-    'ah:metadata:retrieve:special:local',
-    'ah:special:retrieve:metadata:local',
-    'ah:special:metadata:retrieve:local',
-    'ah:special:metadata:local:retrieve',
-    'ah:special:retrieve:local:metadata',
-    'ah:special:local:retrieve:metadata',
-    'ah:special:local:metadata:retrieve',
     'ah:local:special:retrieve',
     'ah:special:local:retrieve',
     'ah:local:retrieve:special',

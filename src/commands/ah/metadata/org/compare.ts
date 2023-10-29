@@ -1,4 +1,3 @@
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
 import { FileChecker, FileWriter, MetadataType, PathUtils } from '@aurahelper/core';
@@ -19,17 +18,7 @@ export default class AhMetadataOrgCompare extends SfCommand<{ [key: string]: Met
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = [
-    'ah:metadata:compare:org',
-    'ah:org:metadata:compare',
-    'ah:org:compare:metadata',
-    'ah:compare:metadata:org',
-    'ah:compare:org:metadata',
-    'ah:metadata:compare',
-    'ah:compare:metadata',
-    'ah:org:compare',
-    'ah:compare:org',
-  ];
+  public static readonly aliases = ['ah:metadata:compare', 'ah:compare:metadata', 'ah:org:compare', 'ah:compare:org'];
   public static readonly flags = {
     root: Flags.directory({
       char: 'r',

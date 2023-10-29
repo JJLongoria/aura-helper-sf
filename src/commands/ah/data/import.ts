@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, Org, SfError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
@@ -34,7 +33,6 @@ export default class AhDataImport extends SfCommand<AhDataImportResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = ['ah:import:data'];
 
   public static readonly flags = {
     root: Flags.directory({

@@ -1,4 +1,3 @@
-/* eslint-disable sf-plugin/no-unnecessary-aliases */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages, Org } from '@salesforce/core';
 import { FileChecker, FileWriter, MetadataDetail, MetadataType, PathUtils } from '@aurahelper/core';
@@ -28,13 +27,6 @@ export default class AhMetadataOrgDescribe extends SfCommand<{ [key: string]: Me
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = [
-    'ah:describe:org:metadata',
-    'ah:describe:metadata:org',
-    'ah:metadata:describe:org',
-    'ah:org:metadata:describe',
-    'ah:org:describe:metadata',
-  ];
 
   public static readonly flags = {
     root: Flags.directory({
