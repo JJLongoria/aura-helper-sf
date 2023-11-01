@@ -68,6 +68,10 @@ You must select compress all, entire directory(s) or single file(s)
 
   <%= config.bin %> <%= command.id %> -d "force-app/main/default/objects" -d "force-app/main/default/applications"
 
+- Compress all XML Files from objects folder (and subfolders) and applications folder
+
+  <%= config.bin %> <%= command.id %> -d "force-app/main/default/objects, force-app/main/default/applications"
+
 - Compress specific XML File with progress report
 
   <%= config.bin %> <%= command.id %> -f "force-app/main/default/objects/Account/Account.object-meta-xml" -p
@@ -75,3 +79,7 @@ You must select compress all, entire directory(s) or single file(s)
 - Compress specific XML Files with JSON output
 
   <%= config.bin %> <%= command.id %> -f "force-app/main/default/objects/Account/Account.object-meta-xml" -f "force-app/main/default/objects/Case/Case.object-meta-xml" --json
+
+- Compress specific XML Files with JSON output
+
+  <%= config.bin %> <%= command.id %> -f "force-app/main/default/objects/Account/Account.object-meta-xml, force-app/main/default/objects/Case/Case.object-meta-xml" --json

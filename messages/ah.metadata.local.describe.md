@@ -72,6 +72,14 @@ Not metadata types found to describe
 
   <%= config.bin %> <%= command.id %> -t "CustomObject, CustomField, Profile, ValidationRule" -p
 
+- Describe CustomObject, CustomField, Profile and ValidationRule metadata types, showing progress and result as table
+
+  <%= config.bin %> <%= command.id %> -t "CustomObject" -t "CustomField" -t "Profile -t "ValidationRule" -p
+
 - Describe CustomObject and CustomField metadata types, showing result as JSON
 
   <%= config.bin %> <%= command.id %> -t "CustomObject, CustomField" --json
+
+- Describe CustomObject and CustomField metadata types, showing result as JSON
+
+  <%= config.bin %> <%= command.id %> -t "CustomObject" -t "CustomField" --json

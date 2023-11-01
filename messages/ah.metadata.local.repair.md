@@ -88,6 +88,14 @@ You must select repair all or repair specific types
 
   <%= config.bin %> <%= command.id %> -t "CustomApplication:App1,Profile,PermissionSet:Perm1,PermissionSet:Perm2,CustomField:Account:Custom_field\_\_c"
 
+- Repair The Custom Application App1, All profiles, The permission Sets Perm1 and Perm2 and the Custom Field Custom_field\_\_c from Account object
+
+  <%= config.bin %> <%= command.id %> -t "CustomApplication:App1" -t "Profile" -t "PermissionSet:Perm1,PermissionSet:Perm2" -t "CustomField:Account:Custom_field\_\_c"
+
+- Repair The Custom Application App1, All profiles, The permission Sets Perm1 and Perm2 and the Custom Field Custom_field\_\_c from Account object
+
+  <%= config.bin %> <%= command.id %> -t "CustomApplication:App1" -t "Profile" -t "PermissionSet:Perm1" -t "PermissionSet:Perm2" -t "CustomField:Account:Custom_field\_\_c"
+
 - Repair all profiles from the project root redirect errors to a file
 
   <%= config.bin %> <%= command.id %> -t "Profile" --output-file "path/to/the/output/checkResult.json""

@@ -94,6 +94,34 @@ To merge package files you must select at least two files to merge
 
 # examples
 
-- Merge two package files and two destructive files into one package and one destructive file
+- Merge two package files and two destructive files into one package and one destructive file to delete files after deploy
 
   <%= config.bin %> <%= command.id %> -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml"
+
+- Merge two package files and two destructive files into one package and one destructive file to delete files before deploy
+
+  <%= config.bin %> <%= command.id %> -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --strategy "by-type" --delete-before
+
+- Merge only package files into one package file
+
+  <%= config.bin %> <%= command.id %> -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --strategy "only-package"
+
+- Merge only the destructive files into one destructive file to delete files after deploy
+
+  <%= config.bin %> <%= command.id %> -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --strategy "only-destructive"
+
+- Merge only the destructive files into one destructive file to delete files before deploy
+
+  <%= config.bin %> <%= command.id %> -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --strategy "only-destructive" --delete-before
+
+- Merge all files into one package file
+
+  <%= config.bin %> <%= command.id %> -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --strategy "full-package"
+
+- Merge all files into destructive file to delete files after deploy
+
+  <%= config.bin %> <%= command.id %> -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --strategy "full-destructive"
+
+- Merge all files files into destructive file to delete files before deploy
+
+  <%= config.bin %> <%= command.id %> -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --strategy "full-destructive" --delete-before

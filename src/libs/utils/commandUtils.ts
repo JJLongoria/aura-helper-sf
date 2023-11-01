@@ -37,67 +37,90 @@ export default class CommandUtils {
     const result: string[] = [];
     const resultTmp: string[] = Utils.forceArray<string>(paths);
     for (const typeTmp of resultTmp) {
-      const path = typeTmp.trim();
-      if (!isFolder) {
-        result.push(CommandUtils.validateFilePath(path.trim(), flagName));
-      } else {
-        result.push(Validator.validateFolderPath(path.trim(), flagName));
-      }
+      typeTmp
+        .trim()
+        .split(',')
+        .map((path) => path.trim())
+        .forEach((path) => {
+          if (!isFolder) {
+            const validatedPath = CommandUtils.validateFilePath(path.trim(), flagName);
+            if (!result.includes(validatedPath)) {
+              result.push(validatedPath);
+            }
+          } else {
+            const validatedPath = CommandUtils.validateFolderPath(path.trim(), flagName);
+            if (!result.includes(validatedPath)) {
+              result.push(validatedPath);
+            }
+          }
+        });
     }
     return result;
   }
 
   public static getTypes(type: string | string[]): string[] {
-    const types: string[] = [];
-    const typesTmp: string[] = Utils.forceArray<string>(type);
-    for (const typeTmp of typesTmp) {
-      types.push(typeTmp.trim());
+    const result: string[] = [];
+    const types: string[] = Utils.forceArray<string>(type);
+    for (const typeTmp of types) {
+      typeTmp
+        .trim()
+        .split(',')
+        .map((t) => t.trim())
+        .forEach((t) => {
+          if (!result.includes(t)) {
+            result.push(t);
+          }
+        });
     }
-    return types;
+    return result;
   }
 
   public static getAdvanceTypes(type: string | string[]): { [key: string]: MetadataType } {
     const types: { [key: string]: MetadataType } = {};
     const typesTmp: string[] = Utils.forceArray<string>(type);
-    for (const typeTmp of typesTmp) {
-      if (typeTmp.includes(':')) {
-        const splits = typeTmp.split(':');
-        if (splits.length === 2) {
-          const metadataType = splits[0].trim();
-          const metadataObject = splits[1].trim();
-          if (!types[metadataType]) {
-            types[metadataType] = new MetadataType(metadataType, false);
+    for (const t of typesTmp) {
+      t.split(',')
+        .map((typeTmp) => typeTmp.trim())
+        .forEach((typeTmp) => {
+          if (typeTmp.includes(':')) {
+            const splits = typeTmp.split(':');
+            if (splits.length === 2) {
+              const metadataType = splits[0].trim();
+              const metadataObject = splits[1].trim();
+              if (!types[metadataType]) {
+                types[metadataType] = new MetadataType(metadataType, false);
+              }
+              if (!types[metadataType].childs[metadataObject] && metadataObject !== '*') {
+                types[metadataType].addChild(new MetadataObject(metadataObject, true));
+              }
+              if (metadataObject === '*') {
+                types[metadataType].checked = true;
+              }
+            } else if (splits.length === 3) {
+              const metadataType = splits[0].trim();
+              const metadataObject = splits[1].trim();
+              const metadataItem = splits[2].trim();
+              if (!types[metadataType]) {
+                types[metadataType] = new MetadataType(metadataType, false);
+              }
+              if (!types[metadataType].childs[metadataObject] && metadataObject !== '*') {
+                types[metadataType].addChild(new MetadataObject(metadataObject, false));
+              }
+              if (!types[metadataType].childs[metadataObject].childs[metadataItem] && metadataItem !== '*') {
+                types[metadataType].childs[metadataObject].addChild(new MetadataItem(metadataItem, true));
+              }
+              if (metadataObject === '*') {
+                types[metadataType].checked = true;
+              }
+              if (metadataItem === '*') {
+                types[metadataType].childs[metadataObject].checked = true;
+              }
+            }
+          } else {
+            const metadataType = typeTmp.trim();
+            types[metadataType] = new MetadataType(metadataType, true);
           }
-          if (!types[metadataType].childs[metadataObject] && metadataObject !== '*') {
-            types[metadataType].addChild(new MetadataObject(metadataObject, true));
-          }
-          if (metadataObject === '*') {
-            types[metadataType].checked = true;
-          }
-        } else if (splits.length === 3) {
-          const metadataType = splits[0].trim();
-          const metadataObject = splits[1].trim();
-          const metadataItem = splits[2].trim();
-          if (!types[metadataType]) {
-            types[metadataType] = new MetadataType(metadataType, false);
-          }
-          if (!types[metadataType].childs[metadataObject] && metadataObject !== '*') {
-            types[metadataType].addChild(new MetadataObject(metadataObject, false));
-          }
-          if (!types[metadataType].childs[metadataObject].childs[metadataItem] && metadataItem !== '*') {
-            types[metadataType].childs[metadataObject].addChild(new MetadataItem(metadataItem, true));
-          }
-          if (metadataObject === '*') {
-            types[metadataType].checked = true;
-          }
-          if (metadataItem === '*') {
-            types[metadataType].childs[metadataObject].checked = true;
-          }
-        }
-      } else {
-        const metadataType = typeTmp.trim();
-        types[metadataType] = new MetadataType(metadataType, true);
-      }
+        });
     }
     return types;
   }
