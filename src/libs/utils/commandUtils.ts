@@ -1,8 +1,18 @@
 import { CoreUtils, FileChecker, MetadataDetail, MetadataItem, MetadataObject, MetadataType } from '@aurahelper/core';
+import { StrUtils } from '@aurahelper/core/dist/utils';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 const Validator = CoreUtils.Validator;
 const Utils = CoreUtils.Utils;
+
+const DURATION_UNITS: { [key: string]: number } = {
+  Y: 8 * 60 * 365,
+  M: 8 * 60 * 30,
+  W: 8 * 60 * 7,
+  D: 8 * 60,
+  h: 60,
+  m: 1,
+};
 
 export interface MetadataDescribeTableFields {
   type: string;
@@ -274,5 +284,39 @@ export default class CommandUtils {
       const err = error as Error;
       throw generalMessages.createError('error.wrong-file', [flagName, err.message]);
     }
+  }
+
+  public static minutesToDurationString(minutes: number, skipZeroValues?: boolean, limitTo?: string): string {
+    if (!minutes) return '';
+    const result = [];
+    for (const name of Object.keys(DURATION_UNITS)) {
+      const p = Math.floor(minutes / DURATION_UNITS[name]);
+      if (p === 0) {
+        if (!skipZeroValues) result.push(p.toString() + name);
+      } else {
+        result.push(p.toString() + name);
+      }
+      minutes %= DURATION_UNITS[name];
+      if (limitTo && name === limitTo.toUpperCase()) {
+        break;
+      }
+    }
+    return result.join(' ');
+  }
+
+  public static durationStringToMinutes(duration: string): number {
+    if (!duration) return 0;
+    const splits = duration.split(' ');
+    const units = Object.keys(DURATION_UNITS);
+    let minutes = 0;
+    for (const split of splits) {
+      for (const unit of units) {
+        if (StrUtils.containsIgnorecase(split, unit)) {
+          const value = Number(StrUtils.replace(split, unit.toUpperCase(), '').trim());
+          minutes += value * DURATION_UNITS[unit.toUpperCase()];
+        }
+      }
+    }
+    return minutes;
   }
 }

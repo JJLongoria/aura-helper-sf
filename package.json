@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "dependencies": {
     "@aurahelper/connector": "^2.2.1",
-    "@aurahelper/core": "^2.6.2",
+    "@aurahelper/core": "G:\\Workspace\\NodeJS\\Aura Helper Framework\\ah-core",
     "@aurahelper/dependencies-manager": "^2.0.2",
     "@aurahelper/git-manager": "^2.1.5",
     "@aurahelper/ignore": "^2.0.1",
@@ -162,6 +162,9 @@
                 "description": "Topic to work with the Aura Helper Metadata JSON Files to craete the package or destructive files"
               }
             }
+          },
+          "scan": {
+            "description": "Topic to work with Static Code Analysis, generate reports, customize code quality gates, etc."
           }
         }
       }
@@ -198,7 +201,8 @@
       "files": [
         "src/**/*.ts",
         "**/tsconfig.json",
-        "messages/**"
+        "messages/**",
+        "src/assets/**"
       ],
       "output": [
         "lib/**",
