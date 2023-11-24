@@ -16,7 +16,7 @@ SF CLI Plugin to work with Salesforce Projects. This application are entire deve
 - [**Merge**](#ahpackagemerge) diferent **package** or **destructive** files into one file with only one command.
 - [**Ignore**](#ahmetadatalocalignore) any metadata type from your local project or from the package files for maintance different configuration into your sandbox and production enviroments with simple file and command.
 - Specially designed for **DevOps workflows**.
-- [**Code Quality Report**](#) with SFDX Scanner, Quality Gates to control the quality of your code like SonarQube, with integration with CLI and DevOps tools. Also create an HTML Report with statistics and details of the code analisys.
+- [**Code Quality Report**](#) with SFDX Scanner, Quality Gates to control the quality of your code like SonarQube, with integration with CI and DevOps tools. Also create an HTML Report with statistics and details of the code analisys.
 - And much more
 
 ### **Specially Designed for DevOps Workflows**
