@@ -1,7 +1,7 @@
 {
   "name": "aura-helper-sf",
   "description": "Plugin for SF CLI to addapt sfdx-aura-helper plugin to the new SF CLI Tool. This CLI contains to many util commands for every Salesforce Project. List and Describe metadata types, create package files from many sources (including git), maintenance your local project integrity and much more. Has to many tools to support CLI workflows and many other things",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "dependencies": {
     "@aurahelper/connector": "^2.2.1",
     "@aurahelper/core": "^2.7.0",
@@ -15,6 +15,7 @@
     "@salesforce/core": "^5.2.10",
     "@salesforce/kit": "^3.0.8",
     "@salesforce/sf-plugins-core": "^3.1.14",
+    "live-server": "^1.2.2",
     "tslib": "^2"
   },
   "devDependencies": {
@@ -25,6 +26,8 @@
     "@salesforce/ts-sinon": "^1.4.18",
     "@swc/core": "^1.3.19",
     "@types/inquirer": "^9.0.3",
+    "@types/live-server": "^1.2.3",
+    "@types/open": "^6.2.1",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "chai": "^4.3.6",
@@ -45,13 +48,15 @@
     "sinon": "10.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
-    "wireit": "^0.14.0"
+    "wireit": "^0.14.0",
+    "copyfiles": "^2.4.1"
   },
   "engines": {
     "node": ">=16.0.0"
   },
   "files": [
     "/lib",
+    "/lib/assets",
     "/messages",
     "/oclif.manifest.json"
   ],
@@ -91,7 +96,15 @@
     "git",
     "package-git",
     "git package",
-    "package"
+    "package",
+    "Static Code Analysis",
+    "Salesforce Scanner",
+    "Salesforce Code Scanner",
+    "Code Scanner",
+    "Code Analysis",
+    "Code Quality",
+    "Code Quality Gates",
+    "PMD"
   ],
   "license": "GPL-3.0-only",
   "main": "lib/index.js",
@@ -167,7 +180,7 @@
             "description": "Topic to work with Static Code Analysis, generate reports, customize code quality gates, etc.",
             "subtopics": {
               "report": {
-                "description": "description for ah.scan.report"
+                "description": "Topic to work with Static Code Analysis Reports created by Aura Helper. You can create yout quality gates by project, run or view reports with Code Analysis results and statistics"
               }
             }
           }
@@ -184,6 +197,7 @@
     "docs": "sf-docs",
     "format": "wireit",
     "lint": "wireit",
+    "copyfiles": "copyfiles -u 1 src/assets/** lib",
     "postpack": "shx rm -f oclif.manifest.json",
     "prepack": "sf-prepack",
     "test": "wireit",
@@ -202,7 +216,7 @@
       ]
     },
     "compile": {
-      "command": "tsc -p . --pretty --incremental",
+      "command": "tsc -p . --pretty --incremental && yarn copyfiles",
       "files": [
         "src/**/*.ts",
         "**/tsconfig.json",

@@ -80,4 +80,14 @@ Set the maximum infos to check on scan report. If the infos are greater than the
 
 # examples
 
-- <%= config.bin %> <%= command.id %>
+- Set the quality gate for the current folder project. The command run in interactive mode, that is, the command will ask for the values of the quality gate for every measure.
+
+  <%= config.bin %> <%= command.id %>
+
+- Set the quality gate for the selected project.
+
+  <%= config.bin %> <%= command.id %> --root 'path/to/project/folder' --interactive
+
+- Set the quality gate for the selected project. This command is not interactive (best for CI/CD). The command wil set the specified values for the quality gate. If the values are not specified, the measure not take effect on reports, that is, always pass the measures you need to check because all not specified measures are set to Not Defined.
+
+  <%= config.bin %> <%= command.id %> --root 'path/to/project/folder' --max-debt "1Y 2M 3W 4D 5h 6m" --max-bugs 10 --max-blockers 10 --max-criticals 10 --max-majors 10 --max-minors 10 --max-infos 10

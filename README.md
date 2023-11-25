@@ -148,6 +148,56 @@ Al commands start by **ah**. For example
 
 <!-- commands -->
 
+- [`sf ah apex execute`](#sf-ah-apex-execute)
+- [`sf ah apex execute org`](#sf-ah-apex-execute-org)
+- [`sf ah apex org execute`](#sf-ah-apex-org-execute)
+- [`sf ah compare metadata`](#sf-ah-compare-metadata)
+- [`sf ah compare org`](#sf-ah-compare-org)
+- [`sf ah compress`](#sf-ah-compress)
+- [`sf ah compress xml`](#sf-ah-compress-xml)
+- [`sf ah data export`](#sf-ah-data-export)
+- [`sf ah data import`](#sf-ah-data-import)
+- [`sf ah execute apex`](#sf-ah-execute-apex)
+- [`sf ah execute apex org`](#sf-ah-execute-apex-org)
+- [`sf ah execute org apex`](#sf-ah-execute-org-apex)
+- [`sf ah get org permissions`](#sf-ah-get-org-permissions)
+- [`sf ah get permissions org`](#sf-ah-get-permissions-org)
+- [`sf ah git tests extract`](#sf-ah-git-tests-extract)
+- [`sf ah local retrieve special`](#sf-ah-local-retrieve-special)
+- [`sf ah local special retrieve`](#sf-ah-local-special-retrieve)
+- [`sf ah metadata compare`](#sf-ah-metadata-compare)
+- [`sf ah metadata local compress`](#sf-ah-metadata-local-compress)
+- [`sf ah metadata local describe`](#sf-ah-metadata-local-describe)
+- [`sf ah metadata local ignore`](#sf-ah-metadata-local-ignore)
+- [`sf ah metadata local list`](#sf-ah-metadata-local-list)
+- [`sf ah metadata local repair`](#sf-ah-metadata-local-repair)
+- [`sf ah metadata local special retrieve`](#sf-ah-metadata-local-special-retrieve)
+- [`sf ah metadata org apex execute`](#sf-ah-metadata-org-apex-execute)
+- [`sf ah metadata org compare`](#sf-ah-metadata-org-compare)
+- [`sf ah metadata org describe`](#sf-ah-metadata-org-describe)
+- [`sf ah metadata org list`](#sf-ah-metadata-org-list)
+- [`sf ah metadata org permissions get`](#sf-ah-metadata-org-permissions-get)
+- [`sf ah metadata org special retrieve`](#sf-ah-metadata-org-special-retrieve)
+- [`sf ah org apex execute`](#sf-ah-org-apex-execute)
+- [`sf ah org compare`](#sf-ah-org-compare)
+- [`sf ah org execute apex`](#sf-ah-org-execute-apex)
+- [`sf ah org get permissions`](#sf-ah-org-get-permissions)
+- [`sf ah org permissions get`](#sf-ah-org-permissions-get)
+- [`sf ah org retrieve special`](#sf-ah-org-retrieve-special)
+- [`sf ah org special retrieve`](#sf-ah-org-special-retrieve)
+- [`sf ah package git create`](#sf-ah-package-git-create)
+- [`sf ah package json create`](#sf-ah-package-json-create)
+- [`sf ah package merge`](#sf-ah-package-merge)
+- [`sf ah permissions get org`](#sf-ah-permissions-get-org)
+- [`sf ah permissions org get`](#sf-ah-permissions-org-get)
+- [`sf ah scan report open`](#sf-ah-scan-report-open)
+- [`sf ah scan report quality`](#sf-ah-scan-report-quality)
+- [`sf ah scan report run`](#sf-ah-scan-report-run)
+- [`sf ah special local retrieve`](#sf-ah-special-local-retrieve)
+- [`sf ah special org retrieve`](#sf-ah-special-org-retrieve)
+- [`sf ah version`](#sf-ah-version)
+- [`sf ah xml compress`](#sf-ah-xml-compress)
+
 ## `sf ah apex execute`
 
 Execute Anonymous Apex N Times.
@@ -3638,15 +3688,152 @@ FLAG DESCRIPTIONS
     Path to file for redirect the output
 ```
 
-## `sf ah scan report`
+## `sf ah scan report open`
+
+Open an Aura Helper Code Analysis Report on a local server.
+
+```
+USAGE
+  $ sf ah scan report open [-i <value>] [-p <value>]
+
+FLAGS
+  -i, --input-dir=<path/to/report/directory>  [default: ./] Path to the report folder to open
+  -p, --port=<port>                           [default: 5000] Port to use for the server
+
+DESCRIPTION
+  Open an Aura Helper Code Analysis Report on a local server.
+
+  Open an Aura Helper Code Analysis Report to view the results of the scan. To close the server report, press Ctrl+C in
+  the terminal window.
+
+EXAMPLES
+  Open the report on the current folder
+
+    $ sf ah scan report open
+
+  Open the report on the folder "path/reports"
+
+    $ sf ah scan report open --input-dir "path/reports"
+
+  Open the report on the folder "path/reports" and running on custom port
+
+    $ sf ah scan report open --input-dir "path/reports" --port 7500
+
+FLAG DESCRIPTIONS
+  -i, --input-dir=<path/to/report/directory>  Path to the report folder to open
+
+    Path to the report folder to open. Defaults to the current working directory.
+
+  -p, --port=<port>  Port to use for the server
+
+    Port to use for the server. Defaults to 5000.
+```
+
+_See code: [lib/commands/ah/scan/report/open.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/scan/report/open.ts)_
+
+## `sf ah scan report quality`
+
+Set Custom Quality Gates for the selected project.
+
+```
+USAGE
+  $ sf ah scan report quality [--json] [-r <value>] [-i] [--max-debt <value>] [--max-bugs <value>] [--max-blockers <value>]
+    [--max-criticals <value>] [--max-majors <value>] [--max-minors <value>] [--max-infos <value>]
+
+FLAGS
+  -i, --[no-]interactive             Run command in interactive mode.
+  -r, --root=<path/to/project/root>  [default: ./] Root Project Path
+  --max-blockers=<number>            Set the maximum blockers to check on scan report.
+  --max-bugs=<number>                Set the maximum bugs to check on scan report.
+  --max-criticals=<number>           Set the maximum criticals to check on scan report.
+  --max-debt=<1Y 1M 1W 1D 1h 1m>     Set the maximum technical debt to check on scan report.
+  --max-infos=<number>               Set the maximum infos to check on scan report.
+  --max-majors=<number>              Set the maximum majors to check on scan report.
+  --max-minors=<number>              Set the maximum minors to check on scan report.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Set Custom Quality Gates for the selected project.
+
+  Set your Custom Quality Gates for the selected project. Only one custom quality gate by project. The Quality Gate is
+  used by the command `scan:report` to process the results and finish the scan with pass or not pass result, depending
+  on the results of the Quality Gate.
+
+EXAMPLES
+  Set the quality gate for the current folder project. The command run in interactive mode, that is, the command will
+  ask for the values of the quality gate for every measure.
+
+    $ sf ah scan report quality
+
+  Set the quality gate for the selected project.
+
+    $ sf ah scan report quality --root 'path/to/project/folder' --interactive
+
+  Set the quality gate for the selected project. This command is not interactive (best for CI/CD). The command wil set
+  the specified values for the quality gate. If the values are not specified, the measure not take effect on reports,
+  that is, always pass the measures you need to check because all not specified measures are set to Not Defined.
+
+    $ sf ah scan report quality --root 'path/to/project/folder' --max-debt "1Y 2M 3W 4D 5h 6m" --max-bugs 10 ^
+      --max-blockers 10 --max-criticals 10 --max-majors 10 --max-minors 10 --max-infos 10
+
+FLAG DESCRIPTIONS
+  -i, --[no-]interactive  Run command in interactive mode.
+
+    Run command in interactive mode. If the flag is not present, the command will use the default values for the flags.
+
+  -r, --root=<path/to/project/root>  Root Project Path
+
+    Path to project root. By default is your current folder
+
+  --max-blockers=<number>  Set the maximum blockers to check on scan report.
+
+    Set the maximum blockers to check on scan report. If the blockers are greater than the maximum, the scan will finish
+    with not passed result. By default use the maximum blockers of the selected Quality Gate.
+
+  --max-bugs=<number>  Set the maximum bugs to check on scan report.
+
+    Set the maximum bugs to check on scan report. If the bugs are greater than the maximum, the scan will finish with
+    not passed result. By default use the maximum bugs of the selected Quality Gate.
+
+  --max-criticals=<number>  Set the maximum criticals to check on scan report.
+
+    Set the maximum criticals to check on scan report. If the criticals are greater than the maximum, the scan will
+    finish with not passed result. By default use the maximum criticals of the selected Quality Gate.
+
+  --max-debt=<1Y 1M 1W 1D 1h 1m>  Set the maximum technical debt to check on scan report.
+
+    Set the maximum technical debt to check on scan report. If the technical debt is greater than the maximum, the scan
+    will finish with not passed result. By default use the maximum technical debt of the selected Quality Gate.
+
+  --max-infos=<number>  Set the maximum infos to check on scan report.
+
+    Set the maximum infos to check on scan report. If the infos are greater than the maximum, the scan will finish with
+    not passed result. By default use the maximum infos of the selected Quality Gate.
+
+  --max-majors=<number>  Set the maximum majors to check on scan report.
+
+    Set the maximum majors to check on scan report. If the majors are greater than the maximum, the scan will finish
+    with not passed result. By default use the maximum majors of the selected Quality Gate.
+
+  --max-minors=<number>  Set the maximum minors to check on scan report.
+
+    Set the maximum minors to check on scan report. If the minors are greater than the maximum, the scan will finish
+    with not passed result. By default use the maximum minors of the selected Quality Gate.
+```
+
+_See code: [lib/commands/ah/scan/report/quality.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/scan/report/quality.ts)_
+
+## `sf ah scan report run`
 
 Execute an entire project code analisys and generate report
 
 ```
 USAGE
-  $ sf ah scan report [--json] [-r <value>] [-p] [--output-dir <value>] [--categories Design|Best
+  $ sf ah scan report run [--json] [-r <value>] [-p] [--output-dir <value>] [--categories Design|Best
     Practices|Security|Performance|Code Style|Documentation|Error Prone|problem|suggestion|Insecure Dependencies]
-    [--pmd-rule-set <value>] [--eslint-rule-set <value>] [-q <value>]
+    [--pmd-rule-set <value>] [--eslint-rule-set <value>] [-q <value>] [--open]
 
 FLAGS
   -p, --progress                             Report Command Progress
@@ -3654,6 +3841,7 @@ FLAGS
   -r, --root=<path/to/project/root>          [default: ./] Root Project Path
   --categories=<category1,category2,...>...  Categories to analize
   --eslint-rule-set=<path/to/eslint/file>    eslint Custom Rule Set File
+  --open                                     Open the generated report
   --output-dir=<path/to/output/file>         [default: ./ScanResult] Generated Files Output Path
   --pmd-rule-set=<path/to/pmd/file>          PMD Custom Rule Set File
 
@@ -3663,10 +3851,34 @@ GLOBAL FLAGS
 DESCRIPTION
   Execute an entire project code analisys and generate report
 
-  Execute an entire project code analisys and generate a complex and navigable report in HTML like SonarQube
+  Execute an entire project code analisys and generate a complex and navigable report in HTML like SonarQube or Similars
 
 EXAMPLES
-  $ sf ah scan report
+  Running a report for the current folder project and save the results on the default folder
+
+    $ sf ah scan report run
+
+  Running a report for the current folder project and save the results on the default folder and get results as JSON
+  (for CI/CD)
+
+    $ sf ah scan report run --output-dir "/path/to/output/folder" --json
+
+  Running a report only for the Security and Performance categories
+
+    $ sf ah scan report run --output-dir "/path/to/output/folder" --categories "Security,Performance"
+
+  Running a report for all categories except Security
+
+    $ sf ah scan report run --output-dir "/path/to/output/folder" --categories "!Security"
+
+  Running a report with the Auta Helper Moderate Quality Gate
+
+    $ sf ah scan report run --output-dir "/path/to/output/folder" --quality-gate Moderate
+
+  Running a report with the project custom Quality Gate. Can create custom quality gates using the command "sf ah scan
+  report quality"
+
+    $ sf ah scan report run --output-dir "/path/to/output/folder" --quality-gate Custom
 
 FLAG DESCRIPTIONS
   -p, --progress  Report Command Progress
@@ -3694,6 +3906,10 @@ FLAG DESCRIPTIONS
 
     eslint Custom Rule Set File. By default use the default Rule Set file of Salesforce Code Analizer
 
+  --open  Open the generated report
+
+    Open Automatically the generated report when finish the scan in the default browser.
+
   --output-dir=<path/to/output/file>  Generated Files Output Path
 
     Path to save the generated output files. By default save result on <actualDir>/ScanResult
@@ -3703,7 +3919,7 @@ FLAG DESCRIPTIONS
     PMD Custom Rule Set File. By default use the default Rule Set file of Salesforce Code Analizer
 ```
 
-_See code: [lib/commands/ah/scan/report.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/scan/report.ts)_
+_See code: [lib/commands/ah/scan/report/run.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/scan/report/run.ts)_
 
 ## `sf ah special local retrieve`
 
@@ -3994,39 +4210,6 @@ FLAG DESCRIPTIONS
 
     Sort order for the XML elements when compress XML files. By default, the elements are sorted with simple XML
     elements first.
-```
-
-<!-- commandsstop -->
-
-- [`sf hello world`](#sf-hello-world)
-
-## `sf hello world`
-
-Say hello either to the world or someone you know.
-
-```
-USAGE
-  $ sf hello world [--json] [-n <value>]
-
-FLAGS
-  -n, --name=<value>  [default: World] The name of the person you'd like to say hello to.
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Say hello either to the world or someone you know.
-
-  Say hello either to the world or someone you know.
-
-EXAMPLES
-  Say hello to the world:
-
-    $ sf hello world
-
-  Say hello to someone you know:
-
-    $ sf hello world --name Astro
 ```
 
 <!-- commandsstop -->

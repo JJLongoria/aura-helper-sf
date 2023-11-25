@@ -10,6 +10,7 @@ import {
   CoreUtils,
 } from '@aurahelper/core';
 import { GitManager } from '@aurahelper/git-manager';
+import { LiveServerParams, shutdown, start } from 'live-server';
 const ProjectUtils = CoreUtils.ProjectUtils;
 const DateUtils = CoreUtils.DateUtils;
 const OSUtils = CoreUtils.OSUtils;
@@ -38,17 +39,17 @@ import {
   SUGGESTIONS,
   UNCATALOGUED,
   VULNERABILITY,
-} from '../../../libs/utils/codeScanValues';
-import CommandUtils from '../../../libs/utils/commandUtils';
-import { VF_RULE_DATA } from '../../../libs/utils/vfRuleData';
-import { JS_RULE_DATA } from '../../../libs/utils/jsRuleData';
-import { TS_RULE_DATA } from '../../../libs/utils/tsRuleData';
-import { HTML_RULE_DATA } from '../../../libs/utils/htmlRuleData';
-import { XML_RULE_DATA } from '../../../libs/utils/xmlRuleData';
-import { APEX_RULE_DATA } from '../../../libs/utils/apexRuleData';
+} from '../../../../libs/utils/codeScanValues';
+import CommandUtils from '../../../../libs/utils/commandUtils';
+import { VF_RULE_DATA } from '../../../../libs/utils/vfRuleData';
+import { JS_RULE_DATA } from '../../../../libs/utils/jsRuleData';
+import { TS_RULE_DATA } from '../../../../libs/utils/tsRuleData';
+import { HTML_RULE_DATA } from '../../../../libs/utils/htmlRuleData';
+import { XML_RULE_DATA } from '../../../../libs/utils/xmlRuleData';
+import { APEX_RULE_DATA } from '../../../../libs/utils/apexRuleData';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('aura-helper-sf', 'ah.scan.report');
+const messages = Messages.loadMessages('aura-helper-sf', 'ah.scan.report.run');
 const generalMessages = Messages.loadMessages('aura-helper-sf', 'general');
 
 const ICONS: { [key: string]: string } = {
@@ -152,7 +153,7 @@ export interface AhScanReportFlags {
   'quality-gate': string;
 }
 
-export type AhScanReportResult = {
+export type AhScanReportRunResult = {
   passed: boolean;
   messages: string[];
   output: string;
@@ -185,7 +186,7 @@ export type AhScanReportResult = {
   org?: string;
 };
 
-export default class AhScanReport extends SfCommand<AhScanReportResult> {
+export default class AhScanReportRun extends SfCommand<AhScanReportRunResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -236,10 +237,14 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
       helpValue: '<quality-gate>',
       default: 'Relaxed',
     }),
+    open: Flags.boolean({
+      summary: messages.getMessage('flags.open.summary'),
+      description: messages.getMessage('flags.open.description'),
+    }),
   };
 
-  public async run(): Promise<AhScanReportResult> {
-    const { flags } = await this.parse(AhScanReport);
+  public async run(): Promise<AhScanReportRunResult> {
+    const { flags } = await this.parse(AhScanReportRun);
     flags.root = CommandUtils.validateProjectPath(flags.root);
     try {
       flags['output-dir'] = CommandUtils.validateFolderPath(flags['output-dir'], '--output-dir');
@@ -256,7 +261,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
     if (flags.progress) {
       this.log(messages.getMessage('message.running-scan'));
     } else {
-      this.spinner.start(messages.getMessage('message.running-scan'));
+      this.spinner.status = messages.getMessage('message.running-scan');
     }
     const scannerResult = await this.runScan(flags);
     const qualityGate = this.getQualityGate(flags);
@@ -264,7 +269,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
     if (flags.progress) {
       this.log(messages.getMessage('message.create-result'));
     } else {
-      this.spinner.start(messages.getMessage('message.create-result'));
+      this.spinner.status = messages.getMessage('message.create-result');
     }
     qualityGateResult.output = this.createHtmlPages(scannerResult, qualityGateResult, qualityGate, flags);
     qualityGateResult.output = OSUtils.isWindows()
@@ -279,19 +284,43 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
         ])
       );
     } else {
-      this.spinner.start(
+      this.spinner.stop(
         messages.getMessage('message.report-success', [
           qualityGateResult.output,
           OSUtils.isWindows() ? qualityGateResult.output + '\\' : qualityGateResult.output + '/',
         ])
       );
     }
+    if (!flags.json && !flags.open) {
+      this.log(messages.getMessage('message.open-report-command', [qualityGateResult.output]) + '\n');
+    }
+    if (flags.open) {
+      this.openReport(qualityGateResult.output);
+    }
     return qualityGateResult;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  private openReport(outputPath: string): void {
+    const params: LiveServerParams = {
+      port: 5000, // Set the server port. Defaults to 8080.
+      host: '0.0.0.0', // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
+      root: outputPath, // Set root directory that's being served. Defaults to cwd.
+      open: true, // When false, it won't load your browser by default.
+      file: 'index.html', // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
+      logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
+    };
+    try {
+      start(params);
+      shutdown();
+    } catch (error) {
+      /* empty */
+    }
+  }
+
   // eslint-disable-next-line complexity, class-methods-use-this
-  private processQualityGate(scannerResult: ScannerResult, qualityGate: QualityGate): AhScanReportResult {
-    const result: AhScanReportResult = {
+  private processQualityGate(scannerResult: ScannerResult, qualityGate: QualityGate): AhScanReportRunResult {
+    const result: AhScanReportRunResult = {
       passed: true,
       messages: [],
       output: '',
@@ -320,7 +349,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
       insecureDependencies: scannerResult.insecureDependencies,
       duplicatedBlocks: scannerResult.duplicatedBlocks,
       measuresFailed: [],
-    } as AhScanReportResult;
+    } as AhScanReportRunResult;
     const debtStatus = this.getDebtStatus(qualityGate, result);
     const blockersStatus = this.getBlockersStatus(qualityGate, result);
     const criticalsStatus = this.getCriticalsStatus(qualityGate, result);
@@ -425,12 +454,12 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }*/
 
   // eslint-disable-next-line class-methods-use-this
-  private getOldQualityGatesResult(flags: Partial<AhScanReportFlags>): AhScanReportResult | undefined {
+  private getOldQualityGatesResult(flags: Partial<AhScanReportFlags>): AhScanReportRunResult | undefined {
     const alias = ProjectUtils.getOrgAlias(flags.root ?? '');
     const auraHelperFolder = PathUtils.getAuraHelperSFTempFilesPath();
     const qualityGatePath = `${auraHelperFolder}/Reports/${alias}_quality_result.json`;
     if (FileChecker.isExists(qualityGatePath)) {
-      const qualityGate = JSON.parse(FileReader.readFileSync(qualityGatePath)) as AhScanReportResult;
+      const qualityGate = JSON.parse(FileReader.readFileSync(qualityGatePath)) as AhScanReportRunResult;
       return qualityGate;
     }
     return undefined;
@@ -440,7 +469,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   private saveResults(
     flags: Partial<AhScanReportFlags>,
     result: ScannerResult,
-    qualityGateResult: AhScanReportResult
+    qualityGateResult: AhScanReportRunResult
   ): void {
     const alias = ProjectUtils.getOrgAlias(flags.root ?? '');
     const auraHelperFolder = PathUtils.getAuraHelperSFTempFilesPath();
@@ -474,7 +503,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
     const response = (await ProcessHandler.runProcess(process)) as ScannerResponse;
     const result: ScannerResult = {
       debt: 0,
-      debtDuration: '0d',
+      debtDuration: '0m',
       totalErrors: 0,
       bugs: 0,
       vulnerabilities: 0,
@@ -507,7 +536,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
     if (flags.progress) {
       this.log(messages.getMessage('message.start-report'));
     } else {
-      this.spinner.start(messages.getMessage('message.start-report'));
+      this.spinner.status = messages.getMessage('message.start-report');
     }
     if (response.status === 0) {
       if (response.result.length > 0) {
@@ -629,7 +658,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
 
   private createHtmlPages(
     result: ScannerResult,
-    qualityGateResult: AhScanReportResult,
+    qualityGateResult: AhScanReportRunResult,
     qualityGate: QualityGate,
     flags: Partial<AhScanReportFlags>
   ): string {
@@ -652,6 +681,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
     const pagesFolder = `${folder}/pages`;
     const jsFolder = `${folder}/js`;
     const codeFolder = `${folder}/code`;
+    const assetsFolder = '../../../../../assets';
     if (!FileChecker.isExists(folder)) {
       FileWriter.createFolderSync(folder);
     }
@@ -670,7 +700,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
     FileWriter.createFileSync(`${folder}/index.html`, overview);
     FileWriter.createFileSync(
       `${folder}/styles.css`,
-      FileReader.readFileSync(PathUtils.getAbsolutePath(__dirname + '../../../../assets/styles.css'))
+      FileReader.readFileSync(PathUtils.getAbsolutePath(`${__dirname}${assetsFolder}/styles.css`))
     );
     FileWriter.createFileSync(`${pagesFolder}/issues.html`, issues);
     FileWriter.createFileSync(`${pagesFolder}/quality-gate.html`, qualityGatePage);
@@ -682,11 +712,11 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
     FileWriter.createFileSync(`${dataFolder}/quality_gate.json`, JSON.stringify(qualityGate));
     FileWriter.createFileSync(
       `${jsFolder}/issuesPage.js`,
-      FileReader.readFileSync(PathUtils.getAbsolutePath(__dirname + '../../../../assets/issuesPage.js'))
+      FileReader.readFileSync(PathUtils.getAbsolutePath(`${__dirname}${assetsFolder}/issuesPage.js`))
     );
     FileWriter.createFileSync(
       `${jsFolder}/fileProblemsPage.js`,
-      FileReader.readFileSync(PathUtils.getAbsolutePath(__dirname + '../../../../assets/fileProblemsPage.js'))
+      FileReader.readFileSync(PathUtils.getAbsolutePath(`${__dirname}${assetsFolder}/fileProblemsPage.js`))
     );
     const problemsByFile: { [key: string]: ScannerProblem[] } = {};
     for (const problem of result.allProblems) {
@@ -812,8 +842,8 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
 
   private overviewHtmlPage(
     result: ScannerResult,
-    qualityGateResult: AhScanReportResult,
-    oldQualityGateResult: AhScanReportResult | undefined,
+    qualityGateResult: AhScanReportRunResult,
+    oldQualityGateResult: AhScanReportRunResult | undefined,
     qualityGate: QualityGate
   ): string {
     const dateStr = new Date().toISOString();
@@ -851,7 +881,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
         <div class="left">
         <h5>Filters</h5>
         <hr />
-        <ul style="list-style: none; padding: 0; margin-right: 10px">
+        <ul style="list-style: none; padding: 0; margin-right: 10px; padding-right: 10px">
           <li class="py-2">
             <a href="#issuesByTypeFilters"
                 data-bs-toggle="collapse"
@@ -869,7 +899,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                   data-value="Bug"
                   data-type="type"
                   onclick="addFilter(this)">
-                <div class="col-auto"><span class="iconify"
+                <div class="col text-truncate"><span class="iconify"
                         data-icon="${ICONS['bug']}"
                         data-height="20"></span> Bug</div>
                 <div class="col-auto"
@@ -881,7 +911,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                   data-value="Vulnerability"
                   data-type="type"
                   onclick="addFilter(this)">
-                <div class="col-auto"><span class="iconify"
+                <div class="col text-truncate"><span class="iconify"
                         data-icon="${ICONS['vulnerability']}"
                         data-height="20"></span> Vulnerability</div>
                 <div class="col-auto"
@@ -893,7 +923,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                   data-value="Security Hotspot"
                   data-type="type"
                   onclick="addFilter(this)">
-                <div class="col-auto"><span class="iconify"
+                <div class="col text-truncate"><span class="iconify"
                         data-icon="${ICONS['security']}"
                         data-height="20"></span> Security Hotspot</div>
                 <div class="col-auto"
@@ -905,7 +935,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                   data-value="Code Smell"
                   data-type="type"
                   onclick="addFilter(this)">
-                <div class="col-auto"><span class="iconify"
+                <div class="col text-truncate"><span class="iconify"
                         data-icon="${ICONS['code-smell']}"
                         data-height="20"></span> Code Smell</div>
                 <div class="col-auto"
@@ -917,7 +947,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                   data-value="Uncatalogued"
                   data-type="type"
                   onclick="addFilter(this)">
-                <div class="col-auto"><span class="iconify"
+                <div class="col text-truncate"><span class="iconify"
                         data-icon="${ICONS['uncatalogued']}"
                         data-height="20"></span> Uncatalogued</div>
                 <div class="col-auto"
@@ -942,7 +972,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                       data-value="1"
                       data-type="severity"
                       onclick="addFilter(this)">
-                    <div class="col-auto my-1"><span class="iconify"
+                    <div class="col text-truncate my-1"><span class="iconify"
                             data-icon="${ICONS['blocker']}"
                             data-height="20"></span> Blocker</div>
                     <div class="col-auto my-1"
@@ -955,7 +985,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                       data-value="2"
                       data-type="severity"
                       onclick="addFilter(this)">
-                    <div class="col-auto my-1"><span class="iconify"
+                    <div class="col text-truncate my-1"><span class="iconify"
                             data-icon="${ICONS['critical']}"
                             data-height="20"></span> Critical
                     </div>
@@ -969,7 +999,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                       data-value="3"
                       data-type="severity"
                       onclick="addFilter(this)">
-                    <div class="col-auto my-1"><span class="iconify"
+                    <div class="col text-truncate my-1"><span class="iconify"
                             data-icon="${ICONS['major']}"
                             data-height="20"></span> Major</div>
                     <div class="col-auto my-1"
@@ -982,7 +1012,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                       data-value="4"
                       data-type="severity"
                       onclick="addFilter(this)">
-                    <div class="col-auto my-1"><span class="iconify"
+                    <div class="col text-truncate my-1"><span class="iconify"
                             data-icon="${ICONS['minor']}"
                             data-height="20"></span> Minor</div>
                     <div class="col-auto my-1"
@@ -995,11 +1025,142 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                       data-value="5"
                       data-type="severity"
                       onclick="addFilter(this)">
-                    <div class="col-auto my-1"><span class="iconify"
+                    <div class="col text-truncate my-1"><span class="iconify"
                             data-icon="${ICONS['info']}"
                             data-height="20"></span> Info</div>
                     <div class="col-auto my-1"
                           id="infosFilterValue">0</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="py-2">
+            <a href="#issuesByCategoryFilters"
+                data-bs-toggle="collapse"
+                class="my-4 filter-link fw-semibold">
+              <span class="iconify"
+                    data-icon="material-symbols:keyboard-arrow-down-rounded"
+                    data-height="20"></span> Category <span id="issuesByCategoryBadge"
+                    class="badge rounded-pill text-bg-secondary d-none ms-4"></span></a>
+            <div class="collapse show mt-2 ps-3"
+                  id="issuesByCategoryFilters">
+              <div class="row">
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="designFilterElement"
+                      data-value="${DESIGN}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['design']}"
+                            data-height="20"></span> ${DESIGN}</div>
+                    <div class="col-auto my-1"
+                          id="designFilterValue">0</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="bestPracticesFilterElement"
+                      data-value="${BEST_PRACTICES}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['best-practices']}"
+                            data-height="20"></span> ${BEST_PRACTICES}</div>
+                    <div class="col-auto my-1"
+                          id="bestPracticesFilterValue">0</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="codeStyleFilterElement"
+                      data-value="${CODE_STYLE}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['code-style']}"
+                            data-height="20"></span> ${CODE_STYLE}</div>
+                    <div class="col-auto my-1"
+                          id="codeStyleFilterValue">0</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="documentationFilterElement"
+                      data-value="${DOCUMENTATION}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['documentation']}"
+                            data-height="20"></span> ${DOCUMENTATION}</div>
+                    <div class="col-auto my-1"
+                          id="documentationFilterValue">0</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="performanceFilterElement"
+                      data-value="${PERFORMANCE}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['performance']}"
+                            data-height="20"></span> ${PERFORMANCE}</div>
+                    <div class="col-auto my-1"
+                          id="performanceFilterValue">0</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="securityFilterElement"
+                      data-value="${SECURITY}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['security']}"
+                            data-height="20"></span> ${SECURITY}</div>
+                    <div class="col-auto my-1"
+                          id="securityFilterValue">0</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="insecureDependenciesFilterElement"
+                      data-value="${INSECURE_DEPENDENCIES}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['insecure-dependencies']}"
+                            data-height="20"></span> ${INSECURE_DEPENDENCIES}</div>
+                    <div class="col-auto my-1"
+                          id="insecureDependenciesFilterValue">0</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="problemFilterElement"
+                      data-value="${PROBLEM}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['problem']}"
+                            data-height="20"></span> Problem</div>
+                    <div class="col-auto my-1"
+                          id="problemFilterValue">0</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a class="row justify-content-between filter-element-link-small"
+                      id="suggestionFilterElement"
+                      data-value="${SUGGESTIONS}"
+                      data-type="category"
+                      onclick="addFilter(this)">
+                    <div class="col text-truncate my-1"><span class="iconify"
+                            data-icon="${ICONS['suggestion']}"
+                            data-height="20"></span> Suggestion</div>
+                    <div class="col-auto my-1"
+                          id="suggestionFilterValue">0</div>
                   </a>
                 </div>
               </div>
@@ -1107,7 +1268,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }
 
   // eslint-disable-next-line complexity
-  private qualityGateHtmlPage(qualityGate: QualityGate, qualityGateResult: AhScanReportResult): string {
+  private qualityGateHtmlPage(qualityGate: QualityGate, qualityGateResult: AhScanReportRunResult): string {
     const debtStatus = this.getDebtStatus(qualityGate, qualityGateResult);
     const bugsStatus = this.getBugsStatus(qualityGate, qualityGateResult);
     const blockersStatus = this.getBlockersStatus(qualityGate, qualityGateResult);
@@ -1242,7 +1403,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private getDebtStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportResult): string {
+  private getDebtStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportRunResult): string {
     if (qualityGate.maxDebt) {
       const debtMinutes = DateUtils.durationStringToMinutes(qualityGate.maxDebt);
       if (qualityGateResult.debt > debtMinutes) {
@@ -1255,7 +1416,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private getBlockersStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportResult): string {
+  private getBlockersStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportRunResult): string {
     if (qualityGate.maxBlockers !== null && qualityGate?.maxBlockers !== undefined && qualityGate?.maxBlockers >= 0) {
       if (qualityGateResult.blockers > qualityGate.maxBlockers) {
         return 'Not Passed';
@@ -1267,7 +1428,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private getCriticalsStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportResult): string {
+  private getCriticalsStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportRunResult): string {
     if (
       qualityGate.maxCriticals !== null &&
       qualityGate?.maxCriticals !== undefined &&
@@ -1283,7 +1444,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private getBugsStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportResult): string {
+  private getBugsStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportRunResult): string {
     if (qualityGate.maxBugs !== null && qualityGate?.maxBugs !== undefined && qualityGate?.maxBugs >= 0) {
       if (qualityGateResult.bugs > qualityGate.maxBugs) {
         return 'Not Passed';
@@ -1295,7 +1456,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private getMajorsStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportResult): string {
+  private getMajorsStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportRunResult): string {
     if (qualityGate.maxMajors !== null && qualityGate?.maxMajors !== undefined && qualityGate?.maxMajors >= 0) {
       if (qualityGateResult.majors > qualityGate.maxMajors) {
         return 'Not Passed';
@@ -1307,7 +1468,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private getMinorsStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportResult): string {
+  private getMinorsStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportRunResult): string {
     if (qualityGate.maxMinors !== null && qualityGate?.maxMinors !== undefined && qualityGate?.maxMinors >= 0) {
       if (qualityGateResult.minors > qualityGate.maxMinors) {
         return 'Not Passed';
@@ -1319,7 +1480,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private getInfosStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportResult): string {
+  private getInfosStatus(qualityGate: QualityGate, qualityGateResult: AhScanReportRunResult): string {
     if (qualityGate.maxInfos !== null && qualityGate?.maxInfos !== undefined && qualityGate?.maxInfos >= 0) {
       if (qualityGateResult.infos > qualityGate.maxInfos) {
         return 'Not Passed';
@@ -1333,7 +1494,7 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   // eslint-disable-next-line class-methods-use-this
   private getQualityGatesHtml(
     result: ScannerResult,
-    qualityGateResult: AhScanReportResult,
+    qualityGateResult: AhScanReportRunResult,
     qualityGate: QualityGate
   ): string {
     let content = `
@@ -1404,8 +1565,8 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
   // eslint-disable-next-line class-methods-use-this, complexity
   private getSummaryHtml(
     result: ScannerResult,
-    qualityGateResult: AhScanReportResult,
-    oldQualityGateResult: AhScanReportResult | undefined
+    qualityGateResult: AhScanReportRunResult,
+    oldQualityGateResult: AhScanReportRunResult | undefined
   ): string {
     // const oldResult = this.getOldResults(flags);
     const content = `
@@ -1490,28 +1651,6 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
       </div>
       <div class="row mb-4">
         <h4>Maintainability</h4>
-        <div class="col-6 border shadow-sm">
-          <div class="row">
-            <div class="col-6 text-center bg-white p-3">
-              <div class="measure-value">${qualityGateResult.debtDuration}</div>
-              <div>
-                <span class="iconify"
-                      data-icon="${this.getIconByType('debt')}"
-                      data-height="20"></span>
-                Technical Debt
-              </div>
-            </div>
-            <div class="col-6 text-center bg-white p-3">
-              <div class="measure-value">${qualityGateResult.codeSmells}</div>
-              <div>
-                <span class="iconify"
-                      data-icon="${this.getIconByType('code-smell')}"
-                      data-height="20"></span>
-                Code Smells
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="col-6 border text-center shadow-sm p-3 bg-white">
           <div class="measure-value">${qualityGateResult.uncatalogued}</div>
           <div>
@@ -1532,6 +1671,28 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
                   data-icon="${this.getIconByType('uncatalogued')}"
                   data-height="20"></span>
             New Uncatalogued
+          </div>
+        </div>
+        <div class="col-6 border shadow-sm">
+          <div class="row">
+            <div class="col-6 text-center bg-white p-3">
+              <div class="measure-value">${qualityGateResult.debtDuration}</div>
+              <div>
+                <span class="iconify"
+                      data-icon="${this.getIconByType('debt')}"
+                      data-height="20"></span>
+                Technical Debt
+              </div>
+            </div>
+            <div class="col-6 text-center bg-white p-3">
+              <div class="measure-value">${qualityGateResult.codeSmells}</div>
+              <div>
+                <span class="iconify"
+                      data-icon="${this.getIconByType('code-smell')}"
+                      data-height="20"></span>
+                Code Smells
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-6 border shadow-sm">
@@ -1981,8 +2142,8 @@ export default class AhScanReport extends SfCommand<AhScanReportResult> {
 
   // eslint-disable-next-line class-methods-use-this
   private getNewTechinicalDebt(
-    qualityGateResult: AhScanReportResult,
-    oldQualityGateResult: AhScanReportResult | undefined
+    qualityGateResult: AhScanReportRunResult,
+    oldQualityGateResult: AhScanReportRunResult | undefined
   ): string {
     if (!oldQualityGateResult?.debt) {
       return qualityGateResult.debtDuration;

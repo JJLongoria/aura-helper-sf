@@ -121,7 +121,7 @@ export default class AhScanReportQuality extends SfCommand<QualityGate> {
         if (value.input) {
           const splits = value.input.split(' ');
           for (const split of splits) {
-            if (split && !split.match(/^[0-9]+[yYmMdDhHwW]$/)) {
+            if (split && !/^[0-9]+[yYmMdDhHwW]$/.exec(split)) {
               return 'Please enter a valid duration format: xY xM xW xD xh xm';
             }
           }

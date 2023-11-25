@@ -57,6 +57,7 @@ let severityFilter = [];
 let languageFilter = [];
 let ruleFilter = [];
 let fileFilter = [];
+let categoryFilter = [];
 let problemsToShow = [];
 let problemsByFile = {};
 let fileSearchTerm = '';
@@ -150,13 +151,20 @@ function addFilter(htmlElement) {
     } else {
       fileFilter.push(value);
     }
+  } else if (type === 'category') {
+    if (categoryFilter.includes(value)) {
+      categoryFilter = categoryFilter.filter((item) => item !== value);
+    } else {
+      categoryFilter.push(value);
+    }
   }
   if (
     typeFilter.length === 0 &&
     severityFilter.length === 0 &&
     languageFilter.length === 0 &&
     ruleFilter.length === 0 &&
-    fileFilter.length === 0
+    fileFilter.length === 0 &&
+    categoryFilter.length === 0
   ) {
     type = undefined;
   }
@@ -170,6 +178,7 @@ function updateFilterValues(filterBy) {
   const issuesByRule = {};
   const issuesBySeverity = {};
   const issuesByFile = {};
+  const issuesByCategory = {};
   problemsToShow = [];
   problemsByFile = {};
   for (const data of resultsData.allProblems) {
@@ -179,7 +188,8 @@ function updateFilterValues(filterBy) {
       (severityFilter.length > 0 && !severityFilter.includes(data.severity)) ||
       (languageFilter.length > 0 && !languageFilter.includes(data.language)) ||
       (ruleFilter.length > 0 && !ruleFilter.includes(data.ruleName)) ||
-      (fileFilter.length > 0 && !fileFilter.includes(data.path))
+      (fileFilter.length > 0 && !fileFilter.includes(data.path)) ||
+      (categoryFilter.length > 0 && !categoryFilter.includes(data.category))
     ) {
       continue;
     }
@@ -218,6 +228,10 @@ function updateFilterValues(filterBy) {
       problemsByFile[data.path] = [];
     }
     problemsByFile[data.path].push(data);
+    if (!issuesByCategory[data.category]) {
+      issuesByCategory[data.category] = 0;
+    }
+    issuesByCategory[data.category]++;
   }
 
   if (problemsLimit > Object.keys(problemsByFile).length) {
@@ -236,6 +250,16 @@ function updateFilterValues(filterBy) {
   const minors = issuesBySeverity[4] ?? 0;
   const infos = issuesBySeverity[5] ?? 0;
 
+  const design = issuesByCategory['Design'] ?? 0;
+  const bestPractices = issuesByCategory['Best Practices'] ?? 0;
+  const performance = issuesByCategory['Performance'] ?? 0;
+  const codeStyle = issuesByCategory['Code Style'] ?? 0;
+  const documentation = issuesByCategory['Documentation'] ?? 0;
+  const insecureDependencies = issuesByCategory['Insecure Dependencies'] ?? 0;
+  const security = issuesByCategory['Security'] ?? 0;
+  const problems = issuesByCategory['problem'] ?? 0;
+  const suggestion = issuesByCategory['suggestion'] ?? 0;
+
   setHtml('#bugFilterValue', bugs);
   setHtml('#vulnerabilityFilterValue', vulnerabilities);
   setHtml('#securityHotspotFilterValue', securityHotspots);
@@ -247,6 +271,16 @@ function updateFilterValues(filterBy) {
   setHtml('#majorsFilterValue', majors);
   setHtml('#minorsFilterValue', minors);
   setHtml('#infosFilterValue', infos);
+
+  setHtml('#designFilterValue', design);
+  setHtml('#bestPracticesFilterValue', bestPractices);
+  setHtml('#performanceFilterValue', performance);
+  setHtml('#codeStyleFilterValue', codeStyle);
+  setHtml('#documentationFilterValue', documentation);
+  setHtml('#insecureDependenciesFilterValue', insecureDependencies);
+  setHtml('#securityFilterValue', security);
+  setHtml('#problemFilterValue', problems);
+  setHtml('#suggestionFilterValue', suggestion);
 
   if (!bugs) {
     disable('#bugFilterElement');
@@ -300,6 +334,52 @@ function updateFilterValues(filterBy) {
     enable('#infoFilterElement');
   }
 
+  if (!design) {
+    disable('#designFilterElement');
+  } else {
+    enable('#designFilterElement');
+  }
+  if (!bestPractices) {
+    disable('#bestPracticesFilterElement');
+  } else {
+    enable('#bestPracticesFilterElement');
+  }
+  if (!performance) {
+    disable('#performanceFilterElement');
+  } else {
+    enable('#performanceFilterElement');
+  }
+  if (!codeStyle) {
+    disable('#codeStyleFilterElement');
+  } else {
+    enable('#codeStyleFilterElement');
+  }
+  if (!documentation) {
+    disable('#documentationFilterElement');
+  } else {
+    enable('#documentationFilterElement');
+  }
+  if (!insecureDependencies) {
+    disable('#insecureDependenciesFilterElement');
+  } else {
+    enable('#insecureDependenciesFilterElement');
+  }
+  if (!security) {
+    disable('#securityFilterElement');
+  } else {
+    enable('#securityFilterElement');
+  }
+  if (!problems) {
+    disable('#problemFilterElement');
+  } else {
+    enable('#problemFilterElement');
+  }
+  if (!suggestion) {
+    disable('#suggestionFilterElement');
+  } else {
+    enable('#suggestionFilterElement');
+  }
+
   if (typeFilter.length > 0) {
     setHtml('#issuesByTypeBadge', typeFilter.join(', '));
     show('#issuesByTypeBadge');
@@ -332,6 +412,13 @@ function updateFilterValues(filterBy) {
     show('#issuesByFileBadge');
   } else {
     hide('#issuesByFileBadge');
+  }
+
+  if (categoryFilter.length > 0) {
+    setHtml('#issuesByCategoryBadge', categoryFilter.join(', '));
+    show('#issuesByCategoryBadge');
+  } else {
+    hide('#issuesByCategoryBadge');
   }
 
   setHtml(
