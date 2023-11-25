@@ -261,7 +261,7 @@ export default class AhScanReportRun extends SfCommand<AhScanReportRunResult> {
     if (flags.progress) {
       this.log(messages.getMessage('message.running-scan'));
     } else {
-      this.spinner.status = messages.getMessage('message.running-scan');
+      this.spinner.start(messages.getMessage('message.running-scan'));
     }
     const scannerResult = await this.runScan(flags);
     const qualityGate = this.getQualityGate(flags);
