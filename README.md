@@ -61,6 +61,7 @@ Supported Operative Systems:
   - [`sf ah git tests extract`](#sf-ah-git-tests-extract)
   - [`sf ah local retrieve special`](#sf-ah-local-retrieve-special)
   - [`sf ah local special retrieve`](#sf-ah-local-special-retrieve)
+  - [`sf ah logs clean`](#sf-ah-logs-clean)
   - [`sf ah metadata compare`](#sf-ah-metadata-compare)
   - [`sf ah metadata local compress`](#sf-ah-metadata-local-compress)
   - [`sf ah metadata local describe`](#sf-ah-metadata-local-describe)
@@ -69,6 +70,7 @@ Supported Operative Systems:
   - [`sf ah metadata local repair`](#sf-ah-metadata-local-repair)
   - [`sf ah metadata local special retrieve`](#sf-ah-metadata-local-special-retrieve)
   - [`sf ah metadata org apex execute`](#sf-ah-metadata-org-apex-execute)
+  - [`sf ah metadata org apex tests extract`](#sf-ah-metadata-org-apex-tests-extract)
   - [`sf ah metadata org compare`](#sf-ah-metadata-org-compare)
   - [`sf ah metadata org describe`](#sf-ah-metadata-org-describe)
   - [`sf ah metadata org list`](#sf-ah-metadata-org-list)
@@ -86,12 +88,13 @@ Supported Operative Systems:
   - [`sf ah package merge`](#sf-ah-package-merge)
   - [`sf ah permissions get org`](#sf-ah-permissions-get-org)
   - [`sf ah permissions org get`](#sf-ah-permissions-org-get)
-  - [`sf ah scan report`](#sf-ah-scan-report)
+  - [`sf ah scan report open`](#sf-ah-scan-report-open)
+  - [`sf ah scan report quality`](#sf-ah-scan-report-quality)
+  - [`sf ah scan report run`](#sf-ah-scan-report-run)
   - [`sf ah special local retrieve`](#sf-ah-special-local-retrieve)
   - [`sf ah special org retrieve`](#sf-ah-special-org-retrieve)
   - [`sf ah version`](#sf-ah-version)
   - [`sf ah xml compress`](#sf-ah-xml-compress)
-  - [`sf hello world`](#sf-hello-world)
 - [**Ignore File**](#ignore-file)
   - [Example:](#example)
     - [IMPORTANT](#important)
@@ -148,56 +151,6 @@ Al commands start by **ah**. For example
 
 <!-- commands -->
 
-- [`sf ah apex execute`](#sf-ah-apex-execute)
-- [`sf ah apex execute org`](#sf-ah-apex-execute-org)
-- [`sf ah apex org execute`](#sf-ah-apex-org-execute)
-- [`sf ah compare metadata`](#sf-ah-compare-metadata)
-- [`sf ah compare org`](#sf-ah-compare-org)
-- [`sf ah compress`](#sf-ah-compress)
-- [`sf ah compress xml`](#sf-ah-compress-xml)
-- [`sf ah data export`](#sf-ah-data-export)
-- [`sf ah data import`](#sf-ah-data-import)
-- [`sf ah execute apex`](#sf-ah-execute-apex)
-- [`sf ah execute apex org`](#sf-ah-execute-apex-org)
-- [`sf ah execute org apex`](#sf-ah-execute-org-apex)
-- [`sf ah get org permissions`](#sf-ah-get-org-permissions)
-- [`sf ah get permissions org`](#sf-ah-get-permissions-org)
-- [`sf ah git tests extract`](#sf-ah-git-tests-extract)
-- [`sf ah local retrieve special`](#sf-ah-local-retrieve-special)
-- [`sf ah local special retrieve`](#sf-ah-local-special-retrieve)
-- [`sf ah metadata compare`](#sf-ah-metadata-compare)
-- [`sf ah metadata local compress`](#sf-ah-metadata-local-compress)
-- [`sf ah metadata local describe`](#sf-ah-metadata-local-describe)
-- [`sf ah metadata local ignore`](#sf-ah-metadata-local-ignore)
-- [`sf ah metadata local list`](#sf-ah-metadata-local-list)
-- [`sf ah metadata local repair`](#sf-ah-metadata-local-repair)
-- [`sf ah metadata local special retrieve`](#sf-ah-metadata-local-special-retrieve)
-- [`sf ah metadata org apex execute`](#sf-ah-metadata-org-apex-execute)
-- [`sf ah metadata org compare`](#sf-ah-metadata-org-compare)
-- [`sf ah metadata org describe`](#sf-ah-metadata-org-describe)
-- [`sf ah metadata org list`](#sf-ah-metadata-org-list)
-- [`sf ah metadata org permissions get`](#sf-ah-metadata-org-permissions-get)
-- [`sf ah metadata org special retrieve`](#sf-ah-metadata-org-special-retrieve)
-- [`sf ah org apex execute`](#sf-ah-org-apex-execute)
-- [`sf ah org compare`](#sf-ah-org-compare)
-- [`sf ah org execute apex`](#sf-ah-org-execute-apex)
-- [`sf ah org get permissions`](#sf-ah-org-get-permissions)
-- [`sf ah org permissions get`](#sf-ah-org-permissions-get)
-- [`sf ah org retrieve special`](#sf-ah-org-retrieve-special)
-- [`sf ah org special retrieve`](#sf-ah-org-special-retrieve)
-- [`sf ah package git create`](#sf-ah-package-git-create)
-- [`sf ah package json create`](#sf-ah-package-json-create)
-- [`sf ah package merge`](#sf-ah-package-merge)
-- [`sf ah permissions get org`](#sf-ah-permissions-get-org)
-- [`sf ah permissions org get`](#sf-ah-permissions-org-get)
-- [`sf ah scan report open`](#sf-ah-scan-report-open)
-- [`sf ah scan report quality`](#sf-ah-scan-report-quality)
-- [`sf ah scan report run`](#sf-ah-scan-report-run)
-- [`sf ah special local retrieve`](#sf-ah-special-local-retrieve)
-- [`sf ah special org retrieve`](#sf-ah-special-org-retrieve)
-- [`sf ah version`](#sf-ah-version)
-- [`sf ah xml compress`](#sf-ah-xml-compress)
-
 ## `sf ah apex execute`
 
 Execute Anonymous Apex N Times.
@@ -207,7 +160,7 @@ USAGE
   $ sf ah apex execute --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -243,9 +196,9 @@ EXAMPLES
     $ sf ah apex execute -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -281,7 +234,7 @@ USAGE
   $ sf ah apex execute org --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -317,9 +270,9 @@ EXAMPLES
     $ sf ah apex execute org -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -355,7 +308,7 @@ USAGE
   $ sf ah apex org execute --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -391,9 +344,9 @@ EXAMPLES
     $ sf ah apex org execute -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -430,7 +383,7 @@ USAGE
   [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             (required) Target Org to Compare.
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -472,9 +425,9 @@ EXAMPLES
     $ sf ah compare metadata -t test.username@salesforceOrg.com.qa --json
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Target Org to Compare.
 
@@ -511,7 +464,7 @@ USAGE
   $ sf ah compare org -o <value> [--json] [-r <value>] [-s <value>] [-a <value>] [-p] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             (required) Target Org to Compare.
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -553,9 +506,9 @@ EXAMPLES
     $ sf ah compare org -t test.username@salesforceOrg.com.qa --json
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Target Org to Compare.
 
@@ -765,7 +718,7 @@ USAGE
     [--prefix <value>]
 
 FLAGS
-  -a, --api-version=<value>           Target API version to use
+  -a, --api-version=<value>           API version to use if different from the default
   -o, --target-org=<value>            Login username or alias for the target org
   -p, --progress                      Report Command Progress
   -q, --query=Select ... from ...     (required) Query to Extract Data
@@ -793,9 +746,9 @@ EXAMPLES
       "./export/accounts"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -823,7 +776,7 @@ FLAG DESCRIPTIONS
     Prefix to add to the generated files
 ```
 
-_See code: [lib/commands/ah/data/export.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/data/export.ts)_
+_See code: [lib/commands/ah/data/export.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/data/export.ts)_
 
 ## `sf ah data import`
 
@@ -835,7 +788,7 @@ USAGE
     <value>]
 
 FLAGS
-  -a, --api-version=<value>           Target API version to use
+  -a, --api-version=<value>           API version to use if different from the default
   -f, --file=<path/to/exported/file>  File to Import.
   -l, --limit=<recordsPerBatch>       [default: 200] Record by Batch
   -o, --target-org=<value>            Login username or alias for the target org
@@ -863,9 +816,9 @@ EXAMPLES
     $ sf ah data import -f "./export/accounts/accounts-plan.json" -n 50
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -f, --file=<path/to/exported/file>  File to Import.
 
@@ -897,7 +850,7 @@ FLAG DESCRIPTIONS
     Username or Alias to the source org for import data from the org, not from a file
 ```
 
-_See code: [lib/commands/ah/data/import.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/data/import.ts)_
+_See code: [lib/commands/ah/data/import.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/data/import.ts)_
 
 ## `sf ah execute apex`
 
@@ -908,7 +861,7 @@ USAGE
   $ sf ah execute apex --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -944,9 +897,9 @@ EXAMPLES
     $ sf ah execute apex -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -982,7 +935,7 @@ USAGE
   $ sf ah execute apex org --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -1018,9 +971,9 @@ EXAMPLES
     $ sf ah execute apex org -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -1056,7 +1009,7 @@ USAGE
   $ sf ah execute org apex --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -1092,9 +1045,9 @@ EXAMPLES
     $ sf ah execute org apex -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -1130,7 +1083,7 @@ USAGE
   $ sf ah get org permissions [--json] [-r <value>] [-o <value>] [-a <value>] [-p] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -1171,9 +1124,9 @@ EXAMPLES
     $ sf ah get org permissions --output-file "path/to/the/output/permissions.json" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -1205,7 +1158,7 @@ USAGE
   $ sf ah get permissions org [--json] [-r <value>] [-o <value>] [-a <value>] [-p] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -1246,9 +1199,9 @@ EXAMPLES
     $ sf ah get permissions org --output-file "path/to/the/output/permissions.json" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -1281,7 +1234,7 @@ USAGE
     [--start-tag <value>] [--end-tag <value>]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
   -s, --source=<value>                 (required) Source Branch, Commit or Tag.
   -t, --target=<value>                 Target Branch, Commit or Tag.
@@ -1312,9 +1265,9 @@ EXAMPLES
       End Tag\" --json
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -r, --root=<path/to/project/root>  Root Project Path
 
@@ -1341,7 +1294,7 @@ FLAG DESCRIPTIONS
     Start Tag for Test Classes names on git commit message. (default: --TESTS START--)
 ```
 
-_See code: [lib/commands/ah/git/tests/extract.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/git/tests/extract.ts)_
+_See code: [lib/commands/ah/git/tests/extract.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/git/tests/extract.ts)_
 
 ## `sf ah local retrieve special`
 
@@ -1353,7 +1306,7 @@ USAGE
     [-c] [--sort-order simpleFirst|complexFirst|alphabetAsc|alphabetDesc]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -c, --compress                     Compress modified XML Files
   -i, --include-org=<value>          Include Org Data
   -p, --progress                     Report Command Progress
@@ -1389,9 +1342,9 @@ EXAMPLES
       RecordType:Account:RtName"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified XML Files
 
@@ -1443,7 +1396,7 @@ USAGE
     [-c] [--sort-order simpleFirst|complexFirst|alphabetAsc|alphabetDesc]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -c, --compress                     Compress modified XML Files
   -i, --include-org=<value>          Include Org Data
   -p, --progress                     Report Command Progress
@@ -1479,9 +1432,9 @@ EXAMPLES
       RecordType:Account:RtName"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified XML Files
 
@@ -1523,6 +1476,41 @@ FLAG DESCRIPTIONS
     elements first.
 ```
 
+## `sf ah logs clean`
+
+Summary of a command.
+
+```
+USAGE
+  $ sf ah logs clean -o <value> [--json] [-a <value>]
+
+FLAGS
+  -a, --api-version=<value>  API version to use if different from the default
+  -o, --target-org=<value>   (required) Login username or alias for the target org
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Summary of a command.
+
+  More information about a command. Don't repeat the summary.
+
+EXAMPLES
+  $ sf ah logs clean
+
+FLAG DESCRIPTIONS
+  -a, --api-version=<value>  API version to use if different from the default
+
+    API version to use if different from the default
+
+  -o, --target-org=<value>  Login username or alias for the target org
+
+    Overrides your default org
+```
+
+_See code: [lib/commands/ah/logs/clean.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/logs/clean.ts)_
+
 ## `sf ah metadata compare`
 
 Compare Metadata Types and Objects between two orgs or between your local project and your auth org
@@ -1533,7 +1521,7 @@ USAGE
   [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             (required) Target Org to Compare.
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -1575,9 +1563,9 @@ EXAMPLES
     $ sf ah metadata compare -t test.username@salesforceOrg.com.qa --json
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Target Org to Compare.
 
@@ -1691,7 +1679,7 @@ FLAG DESCRIPTIONS
     elements first.
 ```
 
-_See code: [lib/commands/ah/metadata/local/compress.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/local/compress.ts)_
+_See code: [lib/commands/ah/metadata/local/compress.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/local/compress.ts)_
 
 ## `sf ah metadata local describe`
 
@@ -1703,7 +1691,7 @@ USAGE
     [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -g, --group                          Group global Quick Actions into GlobalActions.
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -1747,9 +1735,9 @@ EXAMPLES
     $ sf ah metadata local describe -t "CustomObject" -t "CustomField" --json
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -g, --group  Group global Quick Actions into GlobalActions.
 
@@ -1781,7 +1769,7 @@ FLAG DESCRIPTIONS
     Path to file for redirect the output
 ```
 
-_See code: [lib/commands/ah/metadata/local/describe.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/local/describe.ts)_
+_See code: [lib/commands/ah/metadata/local/describe.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/local/describe.ts)_
 
 ## `sf ah metadata local ignore`
 
@@ -1854,7 +1842,7 @@ FLAG DESCRIPTIONS
     elements first.
 ```
 
-_See code: [lib/commands/ah/metadata/local/ignore.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/local/ignore.ts)_
+_See code: [lib/commands/ah/metadata/local/ignore.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/local/ignore.ts)_
 
 ## `sf ah metadata local list`
 
@@ -1865,7 +1853,7 @@ USAGE
   $ sf ah metadata local list [--json] [-r <value>] [-p] [-a <value>] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
   --csv                                Show the result as CSV
@@ -1901,9 +1889,9 @@ EXAMPLES
     $ sf ah metadata local list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -p, --progress  Report Command Progress
 
@@ -1922,7 +1910,7 @@ FLAG DESCRIPTIONS
     Path to file for redirect the output
 ```
 
-_See code: [lib/commands/ah/metadata/local/list.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/local/list.ts)_
+_See code: [lib/commands/ah/metadata/local/list.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/local/list.ts)_
 
 ## `sf ah metadata local repair`
 
@@ -1934,7 +1922,7 @@ USAGE
     simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [--ignore] [--ignore-file <value>] [--output-file <value>]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -c, --compress                       Compress modified files.
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -1984,9 +1972,9 @@ EXAMPLES
     $ sf ah metadata local repair -t "Profile" --output-file "path/to/the/output/checkResult.json""
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified files.
 
@@ -2034,7 +2022,7 @@ FLAG DESCRIPTIONS
     elements first.
 ```
 
-_See code: [lib/commands/ah/metadata/local/repair.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/local/repair.ts)_
+_See code: [lib/commands/ah/metadata/local/repair.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/local/repair.ts)_
 
 ## `sf ah metadata local special retrieve`
 
@@ -2046,7 +2034,7 @@ USAGE
     [-c] [--sort-order simpleFirst|complexFirst|alphabetAsc|alphabetDesc]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -c, --compress                     Compress modified XML Files
   -i, --include-org=<value>          Include Org Data
   -p, --progress                     Report Command Progress
@@ -2082,9 +2070,9 @@ EXAMPLES
       RecordType:Account:RtName"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified XML Files
 
@@ -2126,7 +2114,7 @@ FLAG DESCRIPTIONS
     elements first.
 ```
 
-_See code: [lib/commands/ah/metadata/local/special/retrieve.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/local/special/retrieve.ts)_
+_See code: [lib/commands/ah/metadata/local/special/retrieve.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/local/special/retrieve.ts)_
 
 ## `sf ah metadata org apex execute`
 
@@ -2137,7 +2125,7 @@ USAGE
   $ sf ah metadata org apex execute --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -2173,9 +2161,9 @@ EXAMPLES
     $ sf ah metadata org apex execute -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -2202,7 +2190,58 @@ FLAG DESCRIPTIONS
     Path to the Anonymous Apex Script file
 ```
 
-_See code: [lib/commands/ah/metadata/org/apex/execute.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/org/apex/execute.ts)_
+_See code: [lib/commands/ah/metadata/org/apex/execute.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/org/apex/execute.ts)_
+
+## `sf ah metadata org apex tests extract`
+
+Command to extract a map of the system classes and their test classes (a test execution must have been run previously)
+
+```
+USAGE
+  $ sf ah metadata org apex tests extract -o <value> [--json] [-a <value>] [--output-dir <value>] [--filename <value>]
+  [--save-result]
+
+FLAGS
+  -a, --api-version=<value>          API version to use if different from the default
+  -o, --target-org=<value>           (required) Login username or alias for the target org
+  --filename=<value>                 Filename to save the output
+  --output-dir=<path/to/output/dir>  [default: ./] Output directory
+  --save-result                      Flag to indicate if the result should be saved in a file
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Command to extract a map of the system classes and their test classes (a test execution must have been run previously)
+
+  Command to extract a map of the system classes and their test classes (a test execution must have been run previously)
+
+EXAMPLES
+  $ sf ah metadata org apex tests extract
+
+FLAG DESCRIPTIONS
+  -a, --api-version=<value>  API version to use if different from the default
+
+    API version to use if different from the default
+
+  -o, --target-org=<value>  Login username or alias for the target org
+
+    Overrides your default org
+
+  --filename=<value>  Filename to save the output
+
+    Filename to save the output
+
+  --output-dir=<path/to/output/dir>  Output directory
+
+    Path to directory to save the output
+
+  --save-result  Flag to indicate if the result should be saved in a file
+
+    Flag to indicate if the result should be saved in a file
+```
+
+_See code: [lib/commands/ah/metadata/org/apex/tests/extract.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/org/apex/tests/extract.ts)_
 
 ## `sf ah metadata org compare`
 
@@ -2214,7 +2253,7 @@ USAGE
   [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             (required) Target Org to Compare.
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -2256,9 +2295,9 @@ EXAMPLES
     $ sf ah metadata org compare -t test.username@salesforceOrg.com.qa --json
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Target Org to Compare.
 
@@ -2286,7 +2325,7 @@ FLAG DESCRIPTIONS
     Path to file for redirect the output
 ```
 
-_See code: [lib/commands/ah/metadata/org/compare.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/org/compare.ts)_
+_See code: [lib/commands/ah/metadata/org/compare.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/org/compare.ts)_
 
 ## `sf ah metadata org describe`
 
@@ -2298,7 +2337,7 @@ USAGE
     [--download-all] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -g, --group                          Group global Quick Actions into GlobalActions.
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
@@ -2344,9 +2383,9 @@ EXAMPLES
     $ sf ah metadata org describe -t "CustomObject" -t "CustomField" --json
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -g, --group  Group global Quick Actions into GlobalActions.
 
@@ -2387,7 +2426,7 @@ FLAG DESCRIPTIONS
     Path to file for redirect the output
 ```
 
-_See code: [lib/commands/ah/metadata/org/describe.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/org/describe.ts)_
+_See code: [lib/commands/ah/metadata/org/describe.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/org/describe.ts)_
 
 ## `sf ah metadata org list`
 
@@ -2398,7 +2437,7 @@ USAGE
   $ sf ah metadata org list [--json] [-r <value>] [-o <value>] [-p] [-a <value>] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -2435,9 +2474,9 @@ EXAMPLES
     $ sf ah metadata org list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -2460,7 +2499,7 @@ FLAG DESCRIPTIONS
     Path to file for redirect the output
 ```
 
-_See code: [lib/commands/ah/metadata/org/list.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/org/list.ts)_
+_See code: [lib/commands/ah/metadata/org/list.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/org/list.ts)_
 
 ## `sf ah metadata org permissions get`
 
@@ -2472,7 +2511,7 @@ USAGE
   [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -2513,9 +2552,9 @@ EXAMPLES
     $ sf ah metadata org permissions get --output-file "path/to/the/output/permissions.json" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -2538,7 +2577,7 @@ FLAG DESCRIPTIONS
     Path to file for redirect the output
 ```
 
-_See code: [lib/commands/ah/metadata/org/permissions/get.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/org/permissions/get.ts)_
+_See code: [lib/commands/ah/metadata/org/permissions/get.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/org/permissions/get.ts)_
 
 ## `sf ah metadata org special retrieve`
 
@@ -2550,7 +2589,7 @@ USAGE
     [--sort-order simpleFirst|complexFirst|alphabetAsc|alphabetDesc]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -c, --compress                     Compress modified XML Files
   -p, --progress                     Report Command Progress
   -r, --root=<path/to/project/root>  [default: ./] Root Project Path
@@ -2588,9 +2627,9 @@ EXAMPLES
       RecordType:Account:RtName"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified XML Files
 
@@ -2627,7 +2666,7 @@ FLAG DESCRIPTIONS
     elements first.
 ```
 
-_See code: [lib/commands/ah/metadata/org/special/retrieve.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/metadata/org/special/retrieve.ts)_
+_See code: [lib/commands/ah/metadata/org/special/retrieve.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/metadata/org/special/retrieve.ts)_
 
 ## `sf ah org apex execute`
 
@@ -2638,7 +2677,7 @@ USAGE
   $ sf ah org apex execute --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -2674,9 +2713,9 @@ EXAMPLES
     $ sf ah org apex execute -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -2712,7 +2751,7 @@ USAGE
   $ sf ah org compare -o <value> [--json] [-r <value>] [-s <value>] [-a <value>] [-p] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             (required) Target Org to Compare.
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -2754,9 +2793,9 @@ EXAMPLES
     $ sf ah org compare -t test.username@salesforceOrg.com.qa --json
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Target Org to Compare.
 
@@ -2793,7 +2832,7 @@ USAGE
   $ sf ah org execute apex --file <value> [--json] [-r <value>] [-o <value>] [-a <value>] [-i <value>] [-l -p]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -i, --iterations=<value>           [default: 1] Script execution number
   -l, --print-log                    Print Log every execution
   -o, --target-org=<value>           Login username or alias for the target org
@@ -2829,9 +2868,9 @@ EXAMPLES
     $ sf ah org execute apex -f "path/to/script.apex" --iterations 10 --print-log
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -i, --iterations=<value>  Script execution number
 
@@ -2867,7 +2906,7 @@ USAGE
   $ sf ah org get permissions [--json] [-r <value>] [-o <value>] [-a <value>] [-p] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -2908,9 +2947,9 @@ EXAMPLES
     $ sf ah org get permissions --output-file "path/to/the/output/permissions.json" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -2942,7 +2981,7 @@ USAGE
   $ sf ah org permissions get [--json] [-r <value>] [-o <value>] [-a <value>] [-p] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -2983,9 +3022,9 @@ EXAMPLES
     $ sf ah org permissions get --output-file "path/to/the/output/permissions.json" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -3018,7 +3057,7 @@ USAGE
     [--sort-order simpleFirst|complexFirst|alphabetAsc|alphabetDesc]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -c, --compress                     Compress modified XML Files
   -p, --progress                     Report Command Progress
   -r, --root=<path/to/project/root>  [default: ./] Root Project Path
@@ -3056,9 +3095,9 @@ EXAMPLES
       RecordType:Account:RtName"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified XML Files
 
@@ -3105,7 +3144,7 @@ USAGE
     [--sort-order simpleFirst|complexFirst|alphabetAsc|alphabetDesc]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -c, --compress                     Compress modified XML Files
   -p, --progress                     Report Command Progress
   -r, --root=<path/to/project/root>  [default: ./] Root Project Path
@@ -3143,9 +3182,9 @@ EXAMPLES
       RecordType:Account:RtName"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified XML Files
 
@@ -3193,7 +3232,7 @@ USAGE
     [--ignore-file <value>] [--ignore-destructive] [--ignore-destructive-file <value>] [--output-dir <value>] [-b]
 
 FLAGS
-  -a, --api-version=<value>                        Target API version to use
+  -a, --api-version=<value>                        API version to use if different from the default
   -b, --delete-before                              Create Destructive XML file to delete files before deploy new
                                                    changes.
   -p, --progress                                   Report Command Progress
@@ -3243,9 +3282,9 @@ EXAMPLES
       "./.ahignoreDestructive.json" --json"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -b, --delete-before  Create Destructive XML file to delete files before deploy new changes.
 
@@ -3307,7 +3346,7 @@ FLAG DESCRIPTIONS
     - destructive (d): Generate only destructive file.
 ```
 
-_See code: [lib/commands/ah/package/git/create.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/package/git/create.ts)_
+_See code: [lib/commands/ah/package/git/create.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/package/git/create.ts)_
 
 ## `sf ah package json create`
 
@@ -3319,7 +3358,7 @@ USAGE
     [-d] [-w] [--output-dir <value>]
 
 FLAGS
-  -a, --api-version=<value>             Target API version to use
+  -a, --api-version=<value>             API version to use if different from the default
   -b, --delete-before                   Create Destructive XML file to delete files before deploy new changes.
   -d, --to-delete                       Create a Destructive XML file to delete metadata
   -p, --progress                        Report Command Progress
@@ -3358,9 +3397,9 @@ EXAMPLES
     $ sf ah package json create -s path/to/metadata/json/file.json --to-delete --delete-before
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -b, --delete-before  Create Destructive XML file to delete files before deploy new changes.
 
@@ -3401,7 +3440,7 @@ FLAG DESCRIPTIONS
     Path to save the generated files. By default save result on <actualDir>
 ```
 
-_See code: [lib/commands/ah/package/json/create.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/package/json/create.ts)_
+_See code: [lib/commands/ah/package/json/create.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/package/json/create.ts)_
 
 ## `sf ah package merge`
 
@@ -3415,7 +3454,7 @@ USAGE
     |FP|full-destructive|FULL-DESTRUCTIVE|fd|FD]
 
 FLAGS
-  -a, --api-version=<value>                        Target API version to use
+  -a, --api-version=<value>                        API version to use if different from the default
   -b, --delete-before                              Create Destructive XML file to delete files before deploy new
                                                    changes.
   -f, --file=<value>...                            (required) Paths to the package XML and/or Destructive files to Merge
@@ -3481,9 +3520,9 @@ EXAMPLES
       path/to/destructiveChangesPost1.xml" --strategy "full-destructive" --delete-before
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -b, --delete-before  Create Destructive XML file to delete files before deploy new changes.
 
@@ -3536,7 +3575,7 @@ FLAG DESCRIPTIONS
     - full-destructive (fd): Merge all files into one destructive file.
 ```
 
-_See code: [lib/commands/ah/package/merge.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/package/merge.ts)_
+_See code: [lib/commands/ah/package/merge.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/package/merge.ts)_
 
 ## `sf ah permissions get org`
 
@@ -3547,7 +3586,7 @@ USAGE
   $ sf ah permissions get org [--json] [-r <value>] [-o <value>] [-a <value>] [-p] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -3588,9 +3627,9 @@ EXAMPLES
     $ sf ah permissions get org --output-file "path/to/the/output/permissions.json" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -3622,7 +3661,7 @@ USAGE
   $ sf ah permissions org get [--json] [-r <value>] [-o <value>] [-a <value>] [-p] [--output-file <value>] [--csv]
 
 FLAGS
-  -a, --api-version=<value>            Target API version to use
+  -a, --api-version=<value>            API version to use if different from the default
   -o, --target-org=<value>             Login username or alias for the target org
   -p, --progress                       Report Command Progress
   -r, --root=<path/to/project/root>    [default: ./] Root Project Path
@@ -3663,9 +3702,9 @@ EXAMPLES
     $ sf ah permissions org get --output-file "path/to/the/output/permissions.json" --csv
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -o, --target-org=<value>  Login username or alias for the target org
 
@@ -3729,7 +3768,7 @@ FLAG DESCRIPTIONS
     Port to use for the server. Defaults to 5000.
 ```
 
-_See code: [lib/commands/ah/scan/report/open.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/scan/report/open.ts)_
+_See code: [lib/commands/ah/scan/report/open.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/scan/report/open.ts)_
 
 ## `sf ah scan report quality`
 
@@ -3823,7 +3862,7 @@ FLAG DESCRIPTIONS
     with not passed result. By default use the maximum minors of the selected Quality Gate.
 ```
 
-_See code: [lib/commands/ah/scan/report/quality.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/scan/report/quality.ts)_
+_See code: [lib/commands/ah/scan/report/quality.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/scan/report/quality.ts)_
 
 ## `sf ah scan report run`
 
@@ -3919,7 +3958,7 @@ FLAG DESCRIPTIONS
     PMD Custom Rule Set File. By default use the default Rule Set file of Salesforce Code Analizer
 ```
 
-_See code: [lib/commands/ah/scan/report/run.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/scan/report/run.ts)_
+_See code: [lib/commands/ah/scan/report/run.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/scan/report/run.ts)_
 
 ## `sf ah special local retrieve`
 
@@ -3931,7 +3970,7 @@ USAGE
     [-c] [--sort-order simpleFirst|complexFirst|alphabetAsc|alphabetDesc]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -c, --compress                     Compress modified XML Files
   -i, --include-org=<value>          Include Org Data
   -p, --progress                     Report Command Progress
@@ -3967,9 +4006,9 @@ EXAMPLES
       RecordType:Account:RtName"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified XML Files
 
@@ -4021,7 +4060,7 @@ USAGE
     [--sort-order simpleFirst|complexFirst|alphabetAsc|alphabetDesc]
 
 FLAGS
-  -a, --api-version=<value>          Target API version to use
+  -a, --api-version=<value>          API version to use if different from the default
   -c, --compress                     Compress modified XML Files
   -p, --progress                     Report Command Progress
   -r, --root=<path/to/project/root>  [default: ./] Root Project Path
@@ -4059,9 +4098,9 @@ EXAMPLES
       RecordType:Account:RtName"
 
 FLAG DESCRIPTIONS
-  -a, --api-version=<value>  Target API version to use
+  -a, --api-version=<value>  API version to use if different from the default
 
-    Use this flag to override the default API version. The default API version are the SF PRoject API Version.
+    API version to use if different from the default
 
   -c, --compress  Compress modified XML Files
 
@@ -4124,7 +4163,7 @@ EXAMPLES
     $ sf ah version --json
 ```
 
-_See code: [lib/commands/ah/version.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.0.1/lib/commands/ah/version.ts)_
+_See code: [lib/commands/ah/version.ts](https://github.com/JJLongoria/sf-aura-helper/blob/v1.2.0/lib/commands/ah/version.ts)_
 
 ## `sf ah xml compress`
 

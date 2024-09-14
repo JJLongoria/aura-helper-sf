@@ -1,7 +1,7 @@
 {
   "name": "aura-helper-sf",
   "description": "Plugin for SF CLI to addapt sfdx-aura-helper plugin to the new SF CLI Tool. This CLI contains to many util commands for every Salesforce Project. List and Describe metadata types, create package files from many sources (including git), maintenance your local project integrity and much more. Has to many tools to support CLI workflows and many other things",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "dependencies": {
     "@aurahelper/connector": "^2.2.1",
     "@aurahelper/core": "^2.7.0",
@@ -16,6 +16,7 @@
     "@salesforce/kit": "^3.0.8",
     "@salesforce/sf-plugins-core": "^3.1.14",
     "live-server": "^1.2.2",
+    "string-similarity": "^4.0.4",
     "tslib": "^2"
   },
   "devDependencies": {
@@ -28,9 +29,11 @@
     "@types/inquirer": "^9.0.3",
     "@types/live-server": "^1.2.3",
     "@types/open": "^6.2.1",
+    "@types/string-similarity": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "chai": "^4.3.6",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-salesforce": "^2.0.2",
@@ -48,8 +51,7 @@
     "sinon": "10.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
-    "wireit": "^0.14.0",
-    "copyfiles": "^2.4.1"
+    "wireit": "^0.14.0"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -153,7 +155,12 @@
                 "description": "Topic to work with Salesforce Org Metadata",
                 "subtopics": {
                   "apex": {
-                    "description": "Topic to work with Apex"
+                    "description": "Topic to work with Apex",
+                    "subtopics": {
+                      "tests": {
+                        "description": "description for ah.metadata.org.apex.tests"
+                      }
+                    }
                   },
                   "permissions": {
                     "description": "Topic to work with Salesforce Org Permissions"
@@ -183,6 +190,9 @@
                 "description": "Topic to work with Static Code Analysis Reports created by Aura Helper. You can create yout quality gates by project, run or view reports with Code Analysis results and statistics"
               }
             }
+          },
+          "logs": {
+            "description": "description for ah.logs"
           }
         }
       }
