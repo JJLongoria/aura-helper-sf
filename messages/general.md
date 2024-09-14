@@ -30,6 +30,14 @@ Login username or alias for the target org
 
 Overrides your default org
 
+# flags.api-version.summary
+
+API version to use if different from the default
+
+# flags.api-version.description
+
+API version to use if different from the default
+
 # flags.output-file.summary
 
 Output file
@@ -40,11 +48,11 @@ Path to file for redirect the output
 
 # flags.output-dir.summary
 
-Output file
+Output directory
 
 # flags.output-dir.description
 
-Path to file for redirect the output
+Path to directory to save the output
 
 # flags.sort-order.summary
 
@@ -53,6 +61,14 @@ Sort order for XML Files compression
 # flags.sort-order.description
 
 Sort order for the XML elements when compress XML files. By default, the elements are sorted with simple XML elements first.
+
+# flags.filename.summary
+
+Filename to save the output
+
+# flags.filename.description
+
+Filename to save the output
 
 # message.getting-available-types
 

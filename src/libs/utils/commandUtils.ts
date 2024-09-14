@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CoreUtils, FileChecker, MetadataDetail, MetadataItem, MetadataObject, MetadataType } from '@aurahelper/core';
 import { StrUtils } from '@aurahelper/core/dist/utils';
-import { Messages } from '@salesforce/core';
+import { Connection, Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 const Validator = CoreUtils.Validator;
 const Utils = CoreUtils.Utils;
@@ -318,5 +321,26 @@ export default class CommandUtils {
       }
     }
     return minutes;
+  }
+
+  public static async queryData<T extends Record<string, T>>(connection: Connection, query: string): Promise<T[]> {
+    const result = await connection.query<T>(query);
+    if (!result.records || result.records.length === 0) {
+      return [];
+    } else {
+      return result.records;
+    }
+  }
+
+  public static async toolingQueryData(connection: Connection, query: string): Promise<any[]> {
+    const records = [];
+    let result = await connection.tooling.query(query);
+    records.push(...result.records);
+    while (!result.done) {
+      // eslint-disable-next-line no-await-in-loop
+      result = await connection.tooling.queryMore(result.nextRecordsUrl as string);
+      records.push(...result.records);
+    }
+    return records;
   }
 }
